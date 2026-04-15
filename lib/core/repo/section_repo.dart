@@ -3,19 +3,22 @@ import 'package:form_template/core/service/form_service_mixin.dart';
 import 'package:form_template/models/interface/data_model.dart';
 
 class SectionRepo<T extends DataModel> with FormRepoMixin<T> {
-  //store all instance which multi repository provider created
-  static final Map<Type, SectionRepo> instances = {};
+  //SectionRepo uses a Type key to uniquely identify instances based only on the type.
+  static final Map<Type, SectionRepo> _instances = {};
 
   SectionRepo._internal(FormServiceMixin<T> service) {
     initService(service);
   }
 
   factory SectionRepo(FormServiceMixin<T> service) {
-    final type = T;
-    if (!instances.containsKey(type)) {
-      instances[type] = SectionRepo._internal(service);
+    final Type type = T; // Get the type of T at runtime
+
+    // If an instance for this type doesn't exist, create a new one. Otherwise, return the existing instance.
+    if (!_instances.containsKey(type)) {
+      _instances[type] = SectionRepo<T>._internal(service);
     }
-    return instances[type] as SectionRepo<T>;
+
+    return _instances[type] as SectionRepo<T>;
   }
 
   T? getById(String id) {

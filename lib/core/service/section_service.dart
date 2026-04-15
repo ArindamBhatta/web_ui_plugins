@@ -9,7 +9,7 @@ typedef ModelFromJson<T> = T Function(Map<String, dynamic>);
 /// T can be anything… BUT it MUST be a DataModel
 class SectionService<T extends DataModel> with FormServiceMixin<T> {
   /// cache all instance
-  static final Map<String, SectionService> instances = {};
+  static final Map<String, SectionService> _instances = {};
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final String _collectionName;
@@ -37,11 +37,11 @@ class SectionService<T extends DataModel> with FormServiceMixin<T> {
         '$collectionName-${T.toString()}'; //petOwners-PetOwnerModel
 
     // If an instance with the same key doesn't exist, create a new one. Otherwise, return the existing instance.
-    if (!instances.containsKey(key)) {
-      instances[key] = SectionService._internal(collectionName, formJson);
+    if (!_instances.containsKey(key)) {
+      _instances[key] = SectionService<T>._internal(collectionName, formJson);
     }
 
-    return instances[key] as SectionService<T>;
+    return _instances[key] as SectionService<T>;
   }
 
   /// T follows your contract T has toJson(). T has uid (used in repo).

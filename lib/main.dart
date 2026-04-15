@@ -25,7 +25,6 @@ void main() async {
     runApp(const MediAdminForm());
   } catch (e) {
     debugPrint('Error initializing Firebase: $e');
-    // You might want to show an error UI here
     runApp(
       const MaterialApp(
         home: Scaffold(
@@ -47,6 +46,7 @@ class MediAdminForm extends StatelessWidget {
       providers: [
         RepositoryProvider<SectionRepo<PetOwnerModel>>(
           create: (_) => SectionRepo<PetOwnerModel>(
+            //Function DI we pass a function (behavior)
             SectionService<PetOwnerModel>(
               'petOwners',
               (data) => PetOwnerModel.fromJson(data),

@@ -13,8 +13,8 @@ mixin FormRepoMixin<T extends DataModel> {
   //Expose the broadcast stream
   Stream<(List<T>, String?)> get dataStream => _dataController.stream;
 
-  String?
-  newlyAddedItemId; // This should be set after creating the document in Firestore
+  /// This should be set after creating the document in Firestore
+  String? newlyAddedItemId;
 
   void emitData(List<T> data, {String? addedItemId}) {
     if (!_dataController.isClosed) {
@@ -72,12 +72,13 @@ mixin FormRepoMixin<T extends DataModel> {
     return updated;
   }
 
-  Future<T> delete(int index) async {
+  Future<T> delete(T item) async {
+    final index = items.indexOf(item);
     if (index < 0 || index >= items.length) {
       throw Exception('Item not found');
     }
-    final T removed = await service.delete(items[index]);
-    items.remove(removed);
+    final removed = await service.delete(item);
+    items.removeAt(index);
     return removed;
   }
 

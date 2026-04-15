@@ -1,11 +1,50 @@
-import 'package:form_template/models/interface/data_model.dart';
+part of 'form_cubit.dart';
 
-sealed class FormViewState<T extends DataModel> {}
+enum FormOperation { create, read, update, delete }
 
-final class FormViewStateLoading<T extends DataModel>
-    extends FormViewState<T> {}
+sealed class FormViewState extends Equatable {
+  const FormViewState();
 
-final class FormViewStateSuccess<T extends DataModel>
-    extends FormViewState<T> {}
+  @override
+  List<Object?> get props => [];
+}
 
-final class FormViewStateError<T extends DataModel> extends FormViewState<T> {}
+final class FromInitial extends FormViewState {}
+
+final class FormInProgress extends FormViewState {
+  final FormOperation operation;
+
+  const FormInProgress({required this.operation});
+
+  @override
+  List<Object?> get props => [operation];
+}
+
+//In Dart, <T> is required because the compiler won’t assume generics — must explicitly tell it: “this class is generic.”
+final class FormLoaded<T> extends FormViewState {
+  final List<T> items;
+
+  const FormLoaded({required this.items});
+
+  @override
+  List<Object?> get props => [items];
+}
+
+final class FormSuccess<T> extends FormViewState {
+  final T data;
+  final FormOperation operation;
+
+  const FormSuccess({required this.data, required this.operation});
+
+  @override
+  List<Object?> get props => [data, operation];
+}
+
+final class FormFailure extends FormViewState {
+  final String error;
+
+  const FormFailure({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}
