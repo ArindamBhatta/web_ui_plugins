@@ -1,6 +1,9 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_template/core/form/cubit/form_cubit.dart';
+import 'package:form_template/core/widgets/custom_button.dart';
+import 'package:form_template/core/widgets/globals.dart';
 import 'package:form_template/models/interface/data_model.dart';
 
 enum FieldType {
@@ -28,11 +31,28 @@ class FormPageview extends StatefulWidget {
   final FormCubit formCubit;
   final DataModel dataModel;
   final List<WidgetConfig> fields;
+
+  /// A function that takes the current form data and returns a new DataModel to rebuild the form with. This is useful for cases where the form structure or initial values need to change based on user input.
+  final DataModel? Function(Map<String, dynamic> formData)? rebuildDataModel;
+
+  ///optional parameter
+  final List<CustomButton> actionButtons;
+  final String? saveButtonText;
+  final String? cancelButtonText;
+  final VoidCallback? onCancel;
+  final VoidCallback? onSaveSuccess;
+
   const FormPageview({
     super.key,
     required this.formCubit,
     required this.dataModel,
     required this.fields,
+    this.rebuildDataModel,
+    this.actionButtons = const [],
+    this.saveButtonText,
+    this.cancelButtonText,
+    this.onCancel,
+    this.onSaveSuccess,
   });
 
   @override
@@ -40,13 +60,23 @@ class FormPageview extends StatefulWidget {
 }
 
 class _FormPageviewState extends State<FormPageview> {
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    //Todo: why blocProvider.value
+    return BlocProvider.value(
+      value: widget.formCubit,
+      child: Padding(
+        padding: EdgeInsetsGeometry.all(Globals.sidePadding),
+        child: Column(spacing: Globals.formFieldGap, children: []),
+      ),
+    );
   }
 }
 
-abstract class WidgetConfig {
+//UI access Model so user can access easily
+class WidgetConfig {
   final FieldType fieldType;
   final String key;
   final String? initialValue;
