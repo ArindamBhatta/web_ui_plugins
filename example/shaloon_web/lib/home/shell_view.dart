@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:web_ui_plugins/web_ui_plugins.dart';
-
-import '../domain/models/staff_model.dart';
-import '../domain/models/client_model.dart';
-import '../features/staff/staff_plugin.dart';
-import '../features/clients/client_plugin.dart';
 
 /// Sidebar item entry derived from the plugin registry.
 class _SidebarEntry {
@@ -26,14 +20,14 @@ class _SidebarEntry {
 
 /// App shell — generated from the plugin registry.
 /// The sidebar and routes are never hard-coded here; they come from registered plugins.
-class ShaloonShell extends StatefulWidget {
-  const ShaloonShell({super.key});
+class ShalloonShell extends StatefulWidget {
+  const ShalloonShell({super.key});
 
   @override
-  State<ShaloonShell> createState() => _ShaloonShellState();
+  State<ShalloonShell> createState() => _ShalloonShellState();
 }
 
-class _ShaloonShellState extends State<ShaloonShell> {
+class _ShalloonShellState extends State<ShalloonShell> {
   int _selectedIndex = 0;
 
   List<_SidebarEntry> _buildEntries() {

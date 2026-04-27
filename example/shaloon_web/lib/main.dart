@@ -17,15 +17,13 @@ void main() async {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
           useMaterial3: true,
         ),
-        shell: const ShaloonShell(),
+        shell: const ShalloonShell(),
       ),
     );
   } catch (e) {
     runApp(
       MaterialApp(
-        home: Scaffold(
-          body: Center(child: Text('Initialization failed: $e')),
-        ),
+        home: Scaffold(body: Center(child: Text('Initialization failed: $e'))),
       ),
     );
   }

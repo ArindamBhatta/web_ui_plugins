@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 // ── Section enum ──────────────────────────────────────────────────────────────
 // The developer just adds values here; the plugin registry generates the sidebar.
-enum ShaloonSection {
+enum ShalloonSection {
   // People
   staff,
   clients,
@@ -16,89 +16,89 @@ enum ShaloonSection {
   operators,
 }
 
-extension ShaloonSectionX on ShaloonSection {
+extension ShalloonSectionX on ShalloonSection {
   String get label {
     switch (this) {
-      case ShaloonSection.staff:
+      case ShalloonSection.staff:
         return 'Staff';
-      case ShaloonSection.clients:
+      case ShalloonSection.clients:
         return 'Clients';
-      case ShaloonSection.appointments:
+      case ShalloonSection.appointments:
         return 'Appointments';
-      case ShaloonSection.services:
+      case ShalloonSection.services:
         return 'Services';
-      case ShaloonSection.billing:
+      case ShalloonSection.billing:
         return 'Billing';
-      case ShaloonSection.operators:
+      case ShalloonSection.operators:
         return 'Operators';
     }
   }
 
   IconData get icon {
     switch (this) {
-      case ShaloonSection.staff:
+      case ShalloonSection.staff:
         return Icons.badge_outlined;
-      case ShaloonSection.clients:
+      case ShalloonSection.clients:
         return Icons.people_alt_outlined;
-      case ShaloonSection.appointments:
+      case ShalloonSection.appointments:
         return Icons.calendar_today_outlined;
-      case ShaloonSection.services:
+      case ShalloonSection.services:
         return Icons.content_cut_outlined;
-      case ShaloonSection.billing:
+      case ShalloonSection.billing:
         return Icons.receipt_long_outlined;
-      case ShaloonSection.operators:
+      case ShalloonSection.operators:
         return Icons.admin_panel_settings_outlined;
     }
   }
 
   Color get color {
     switch (this) {
-      case ShaloonSection.staff:
+      case ShalloonSection.staff:
         return Colors.blue;
-      case ShaloonSection.clients:
+      case ShalloonSection.clients:
         return Colors.green;
-      case ShaloonSection.appointments:
+      case ShalloonSection.appointments:
         return Colors.purple;
-      case ShaloonSection.services:
+      case ShalloonSection.services:
         return Colors.orange;
-      case ShaloonSection.billing:
+      case ShalloonSection.billing:
         return Colors.teal;
-      case ShaloonSection.operators:
+      case ShalloonSection.operators:
         return Colors.blueGrey;
     }
   }
 
   int get order {
     switch (this) {
-      case ShaloonSection.staff:
+      case ShalloonSection.staff:
         return 0;
-      case ShaloonSection.clients:
+      case ShalloonSection.clients:
         return 1;
-      case ShaloonSection.appointments:
+      case ShalloonSection.appointments:
         return 2;
-      case ShaloonSection.services:
+      case ShalloonSection.services:
         return 3;
-      case ShaloonSection.billing:
+      case ShalloonSection.billing:
         return 4;
-      case ShaloonSection.operators:
+      case ShalloonSection.operators:
         return 5;
     }
   }
 }
 
 // ── Persona / Role enum ───────────────────────────────────────────────────────
-enum ShaloonPersona { admin, manager, stylist, receptionist }
+enum ShalloonPersona { admin, manager, stylist, receptionist }
 
-extension ShaloonPersonaX on ShaloonPersona {
+extension ShalloonPersonaX on ShalloonPersona {
   String get label {
     switch (this) {
-      case ShaloonPersona.admin:
+      case ShalloonPersona.admin:
         return 'Admin';
-      case ShaloonPersona.manager:
+      case ShalloonPersona.manager:
         return 'Manager';
-      case ShaloonPersona.stylist:
+      case ShalloonPersona.stylist:
         return 'Stylist';
-      case ShaloonPersona.receptionist:
+      case ShalloonPersona.receptionist:
         return 'Receptionist';
     }
   }

@@ -6,7 +6,7 @@ import 'package:web_ui_plugins/web_ui_plugins.dart';
 class StaffModel extends DataModel {
   String? id;
   String? name;
-  String? role; // ShaloonPersona.label
+  String? role; // ShalloonPersona.label
   String? mobile;
   String? email;
   String? photoUrl;

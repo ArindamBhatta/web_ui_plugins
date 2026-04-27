@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:web_ui_plugins/web_ui_plugins.dart';
 
-import '../../domain/enums/shaloon_enums.dart';
+import '../../domain/enums/shalloon_enums.dart';
 import '../../domain/models/staff_model.dart';
 import 'staff_view.dart';
 
@@ -10,18 +10,18 @@ import 'staff_view.dart';
 /// This is the entire surface area the developer fills in to add a new section.
 final staffPlugin = PluginDescriptor<StaffModel>(
   moduleId: 'staff',
-  title: ShaloonSection.staff.label,
-  icon: ShaloonSection.staff.icon,
-  color: ShaloonSection.staff.color,
-  order: ShaloonSection.staff.order,
+  title: ShalloonSection.staff.label,
+  icon: ShalloonSection.staff.icon,
+  color: ShalloonSection.staff.color,
+  order: ShalloonSection.staff.order,
   features: const PluginFeatureFlags(
     supportsCrud: true,
     supportsRealtime: true,
     supportsUpload: true, // profile photo
   ),
   visibilityPolicy: PersonaPermissionPolicy({
-    ShaloonPersona.admin.label,
-    ShaloonPersona.manager.label,
+    ShalloonPersona.admin.label,
+    ShalloonPersona.manager.label,
   }),
   dataBinding: PluginDataBinding<StaffModel>(
     collectionName: 'staff',

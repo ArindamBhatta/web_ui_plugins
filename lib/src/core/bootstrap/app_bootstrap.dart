@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:web_ui_plugins/src/core/contracts/data_model.dart';
 import 'package:web_ui_plugins/src/core/contracts/permission_contract.dart';
 import 'package:web_ui_plugins/src/core/contracts/plugin_descriptor.dart';
 import 'package:web_ui_plugins/src/core/contracts/upload_contract.dart';
@@ -58,9 +57,7 @@ class AppBootstrap {
   /// Step 2: Register all plugins.
   /// Each plugin's service and repo are created inside scoped registry —
   /// no manual provider wiring needed.
-  static Future<void> registerPlugins(
-    List<PluginDescriptor> plugins,
-  ) async {
+  static Future<void> registerPlugins(List<PluginDescriptor> plugins) async {
     for (final plugin in plugins) {
       await PluginRegistry.instance.register(plugin);
     }
@@ -81,11 +78,7 @@ class AppBootstrap {
           final cubits = _buildCubits(context);
           return MultiBlocProvider(
             providers: cubits,
-            child: MaterialApp(
-              title: title,
-              theme: theme,
-              home: shell,
-            ),
+            child: MaterialApp(title: title, theme: theme, home: shell),
           );
         },
       ),
@@ -115,9 +108,8 @@ class AppBootstrap {
       final desc = entry.descriptor;
       return BlocProvider(
         key: ValueKey('cubit_${desc.moduleId}'),
-        create: (_) => FormCubit(
-          repo: RepositoryProvider.of<ScopedRepo>(context),
-        ),
+        create: (_) =>
+            FormCubit(repo: RepositoryProvider.of<ScopedRepo>(context)),
       );
     }).toList();
   }

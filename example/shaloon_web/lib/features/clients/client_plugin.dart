@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:web_ui_plugins/web_ui_plugins.dart';
 
-import '../../domain/enums/shaloon_enums.dart';
+import '../../domain/enums/shalloon_enums.dart';
 import '../../domain/models/client_model.dart';
 import 'client_view.dart';
 
 /// Client plugin descriptor.
 final clientPlugin = PluginDescriptor<ClientModel>(
   moduleId: 'clients',
-  title: ShaloonSection.clients.label,
-  icon: ShaloonSection.clients.icon,
-  color: ShaloonSection.clients.color,
-  order: ShaloonSection.clients.order,
+  title: ShalloonSection.clients.label,
+  icon: ShalloonSection.clients.icon,
+  color: ShalloonSection.clients.color,
+  order: ShalloonSection.clients.order,
   features: const PluginFeatureFlags(
     supportsCrud: true,
     supportsRealtime: true,
@@ -20,10 +20,10 @@ final clientPlugin = PluginDescriptor<ClientModel>(
   ),
   // All personas can view clients
   visibilityPolicy: PersonaPermissionPolicy({
-    ShaloonPersona.admin.label,
-    ShaloonPersona.manager.label,
-    ShaloonPersona.receptionist.label,
-    ShaloonPersona.stylist.label,
+    ShalloonPersona.admin.label,
+    ShalloonPersona.manager.label,
+    ShalloonPersona.receptionist.label,
+    ShalloonPersona.stylist.label,
   }),
   dataBinding: PluginDataBinding<ClientModel>(
     collectionName: 'clients',

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:web_ui_plugins/core/widgets/custom_button.dart';
-import 'package:web_ui_plugins/core/widgets/custom_dialog_box.dart';
 import 'package:web_ui_plugins/core/widgets/custom_textfield.dart';
-import 'package:web_ui_plugins/core/widgets/customizable_search_bar.dart';
-import 'package:web_ui_plugins/core/widgets/enums.dart';
 import 'package:web_ui_plugins/core/widgets/globals.dart';
 
 class FormTimeField extends StatefulWidget {
