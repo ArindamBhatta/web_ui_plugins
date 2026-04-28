@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:web_ui_plugins/core/widgets/globals.dart';
 import 'package:web_ui_plugins/src/core/widgets/custom_button.dart';
-import 'package:web_ui_plugins/src/core/widgets/globals.dart';
 import 'package:web_ui_plugins/src/core/contracts/data_model.dart';
 
 class SubSectionView extends StatelessWidget {

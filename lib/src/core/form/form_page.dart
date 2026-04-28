@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/services.dart';
+import 'package:web_ui_plugins/core/widgets/globals.dart';
 import 'package:web_ui_plugins/src/core/functions/date_time_utils.dart';
 import 'package:web_ui_plugins/src/core/widgets/custom_button.dart';
 import 'package:web_ui_plugins/src/core/widgets/custom_snack_bar.dart';
-import 'package:web_ui_plugins/src/core/widgets/enums.dart';
-import 'package:web_ui_plugins/src/core/widgets/globals.dart';
+import 'package:web_ui_plugins/src/core/widgets/package_enums.dart';
 import 'package:web_ui_plugins/src/core/contracts/data_model.dart';
 import 'cubit/form_cubit.dart';
 import 'widgets/form_age_field.dart';

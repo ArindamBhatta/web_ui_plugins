@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:web_ui_plugins/src/core/form/cubit/form_cubit.dart';
 import 'package:web_ui_plugins/src/core/form/repo/form_repo_mixin.dart';
-import 'package:web_ui_plugins/src/core/widgets/enums.dart';
+import 'package:web_ui_plugins/src/core/widgets/package_enums.dart';
 
 import 'package:web_ui_plugins/src/core/contracts/data_model.dart';
 

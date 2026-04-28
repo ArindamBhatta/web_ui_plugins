@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:web_ui_plugins/core/widgets/globals.dart';
 import 'package:web_ui_plugins/src/core/contracts/plugin_descriptor.dart';
 import 'package:web_ui_plugins/src/core/permissions/permission_middleware.dart';
 import 'package:web_ui_plugins/src/core/registry/plugin_registry.dart';
 import 'package:web_ui_plugins/src/core/widgets/custom_snack_bar.dart';
-import 'package:web_ui_plugins/src/core/widgets/globals.dart';
 
 class PluginLeftNavigation extends StatelessWidget {
   final double width;
@@ -26,7 +26,9 @@ class PluginLeftNavigation extends StatelessWidget {
       );
     }).toList();
 
-    final currentPath = GoRouter.of(context).routeInformationProvider.value.uri.path;
+    final currentPath = GoRouter.of(
+      context,
+    ).routeInformationProvider.value.uri.path;
 
     return Container(
       width: width,
@@ -68,7 +70,10 @@ class PluginLeftNavigation extends StatelessWidget {
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 220),
                 curve: Curves.easeInOutCubic,
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 12,
+                ),
                 decoration: BoxDecoration(
                   color: isSelected
                       ? descriptor.color.withValues(alpha: 0.12)
@@ -83,10 +88,10 @@ class PluginLeftNavigation extends StatelessWidget {
                       child: Text(
                         descriptor.title,
                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                              fontWeight: isSelected
-                                  ? FontWeight.w600
-                                  : FontWeight.w400,
-                            ),
+                          fontWeight: isSelected
+                              ? FontWeight.w600
+                              : FontWeight.w400,
+                        ),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -100,10 +105,7 @@ class PluginLeftNavigation extends StatelessWidget {
     );
   }
 
-  bool _matchesRoute(
-    String currentPath,
-    List<PluginRouteDescriptor> routes,
-  ) {
+  bool _matchesRoute(String currentPath, List<PluginRouteDescriptor> routes) {
     for (final route in routes) {
       final path = route.path;
       if (currentPath == path) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:web_ui_plugins/src/core/section/widget/custom_list_tile.dart';
-import 'package:web_ui_plugins/src/core/widgets/enums.dart';
+import 'package:web_ui_plugins/src/core/widgets/package_enums.dart';
 import 'package:web_ui_plugins/src/core/contracts/data_model.dart';
 
 class CustomListView extends StatefulWidget {

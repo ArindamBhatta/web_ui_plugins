@@ -12,8 +12,9 @@ import 'package:web_ui_plugins/src/core/widgets/custom_button.dart';
 import 'package:web_ui_plugins/src/core/widgets/custom_dialog_box.dart';
 import 'package:web_ui_plugins/src/core/widgets/custom_snack_bar.dart';
 import 'package:web_ui_plugins/src/core/widgets/customizable_search_bar.dart';
-import 'package:web_ui_plugins/src/core/widgets/enums.dart';
-import 'package:web_ui_plugins/src/core/widgets/globals.dart' show Globals;
+import 'package:web_ui_plugins/src/core/widgets/package_enums.dart'
+  show SuccessStatus;
+import 'package:web_ui_plugins/core/widgets/globals.dart' show Globals;
 
 import 'package:web_ui_plugins/src/core/contracts/data_model.dart';
 
@@ -21,7 +22,9 @@ import 'package:web_ui_plugins/src/core/contracts/data_model.dart';
 
 // Section widget
 class SectionWidget<T extends DataModel> extends StatefulWidget {
-  final Section section;
+  final String sectionLabel;
+  final IconData sectionIcon;
+  final Color sectionColor;
   final String sectionTitle;
   final FormRepoMixin<T> repo;
   final FormCubit<T> formCubit;
@@ -48,7 +51,9 @@ class SectionWidget<T extends DataModel> extends StatefulWidget {
 
   const SectionWidget({
     super.key,
-    required this.section,
+    required this.sectionLabel,
+    required this.sectionIcon,
+    required this.sectionColor,
     required this.repo,
     required this.formCubit,
     required this.sectionTitle,
@@ -114,7 +119,7 @@ class _SectionState<T extends DataModel> extends State<SectionWidget<T>> {
     ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w500);
     final textPainter = TextPainter(
       text: TextSpan(
-        text: widget.section.name.toUpperCase(),
+        text: widget.sectionLabel.toUpperCase(),
         style: titleStyle,
       ),
       textDirection: Directionality.of(context),
@@ -459,8 +464,8 @@ class _SectionState<T extends DataModel> extends State<SectionWidget<T>> {
                                         'No ${widget.sectionTitle} Information',
                                     subtitle:
                                         'Please select ${widget.sectionTitle.toLowerCase()} to view details.',
-                                    icon: widget.section.icon,
-                                    iconColor: widget.section.color,
+                                  icon: widget.sectionIcon,
+                                  iconColor: widget.sectionColor,
                                   );
                           },
                         ),
@@ -486,7 +491,9 @@ class _SectionState<T extends DataModel> extends State<SectionWidget<T>> {
           }
 
           return SectionView(
-            section: widget.section,
+            sectionLabel: widget.sectionLabel,
+            sectionIcon: widget.sectionIcon,
+            sectionColor: widget.sectionColor,
             headerLeftActions: leftSectionActions.isEmpty
                 ? null
                 : leftSectionActions,

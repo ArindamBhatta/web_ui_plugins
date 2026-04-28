@@ -55,8 +55,7 @@ export 'src/core/widgets/custom_dialog_box.dart';
 export 'src/core/widgets/custom_snack_bar.dart';
 export 'src/core/widgets/custom_textfield.dart';
 export 'src/core/widgets/customizable_search_bar.dart';
-export 'src/core/widgets/enums.dart';
-export 'src/core/widgets/globals.dart';
+export 'src/core/widgets/package_enums.dart';
 
 // ── Utility functions ─────────────────────────────────────────────────────────
 export 'src/core/functions/date_time_utils.dart';

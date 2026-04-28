@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:web_ui_plugins/src/core/widgets/enums.dart';
-import 'package:web_ui_plugins/src/core/widgets/globals.dart';
+import 'package:web_ui_plugins/core/widgets/globals.dart';
 
 class SectionView extends StatelessWidget {
   final Widget child;
-  final Section section;
+  final String sectionLabel;
+  final IconData sectionIcon;
+  final Color sectionColor;
   final List<Widget>? headerLeftActions;
   final List<Widget>? headerCenterActions;
   final List<Widget>? headerRightActions;
@@ -14,7 +15,9 @@ class SectionView extends StatelessWidget {
   const SectionView({
     super.key,
     required this.child,
-    required this.section,
+    required this.sectionLabel,
+    required this.sectionIcon,
+    required this.sectionColor,
     this.headerLeftActions,
     this.headerCenterActions,
     this.headerRightActions,
@@ -39,10 +42,10 @@ class SectionView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(section.icon, size: 24, color: section.color),
+                Icon(sectionIcon, size: 24, color: sectionColor),
                 SizedBox(width: Globals.sidePadding),
                 Text(
-                  section.name.toUpperCase(),
+                  sectionLabel.toUpperCase(),
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w500,
                     color: Theme.of(
