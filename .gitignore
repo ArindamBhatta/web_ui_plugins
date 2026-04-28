@@ -38,6 +38,9 @@ migrate_working_dir/
 **/build/flutter_assets/
 **/build/native_assets/
 **/build/native_hooks/
+
+# Emulator data (local only, do not push)
+emulator-data/
 /coverage/
 **/coverage/
 
