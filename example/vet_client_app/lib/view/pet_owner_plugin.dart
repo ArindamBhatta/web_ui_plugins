@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:web_ui_plugins/web_ui_plugins.dart';
 
-import '../domain/enums/shalloon_enums.dart';
+import '../domain/enums/vet_application_enums.dart';
 import '../domain/models/pet_owner_model.dart';
 
 // Single Source of Truth: - It describes everything the framework needs to know about a plugin/module: its unique ID, display info, routes, data binding, permissions, and features.
@@ -24,10 +24,10 @@ petOwnerPlugin = PluginDescriptor<PetOwnerModel>(
 
   // All personas can view clients section, but only admin and manager can edit (enforced in the UI and in the API).
   visibilityPolicy: PersonaPermissionPolicy({
-    ShalloonPersona.admin.label,
-    ShalloonPersona.manager.label,
-    ShalloonPersona.receptionist.label,
-    ShalloonPersona.stylist.label,
+    VetApplicationEnums.admin.label,
+    VetApplicationEnums.manager.label,
+    VetApplicationEnums.receptionist.label,
+    VetApplicationEnums.stylist.label,
   }),
 
   /// Data binding: collection, serializer, empty factory. The framework uses this to generate a repo and sync with Firestore. The plugin author only writes the model and the fromJson logic, and the framework handles the rest.

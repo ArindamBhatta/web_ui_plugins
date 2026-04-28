@@ -1,112 +1,75 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // ── Section enum ──────────────────────────────────────────────────────────────
 // The developer just adds values here; the plugin registry generates the sidebar.
 enum VetAppSection {
-  staff,
+  //Persona
   petOwners,
   doctors,
-
-  // Operations
-  appointments,
-  services,
-  billing,
-
-  // Settings
-  operators,
+  technicians,
 }
 
-extension VetAppSectionX on VetAppSection {
+extension VetAppSectionHelper on VetAppSection {
   String get label {
     switch (this) {
-      case VetAppSection.staff:
-        return 'Staff';
       case VetAppSection.petOwners:
         return 'Pet Owners';
       case VetAppSection.doctors:
         return 'Doctors';
-      case VetAppSection.appointments:
-        return 'Appointments';
-      case VetAppSection.services:
-        return 'Services';
-      case VetAppSection.billing:
-        return 'Billing';
-      case VetAppSection.operators:
-        return 'Operators';
+      case VetAppSection.technicians:
+        return 'Technicians';
     }
   }
 
   IconData get icon {
     switch (this) {
-      case VetAppSection.staff:
-        return Icons.badge_outlined;
       case VetAppSection.petOwners:
-        return Icons.people_alt_outlined;
+        return FontAwesomeIcons.peopleGroup;
+
       case VetAppSection.doctors:
-        return Icons.local_hospital_outlined;
-      case VetAppSection.appointments:
-        return Icons.calendar_today_outlined;
-      case VetAppSection.services:
-        return Icons.content_cut_outlined;
-      case VetAppSection.billing:
-        return Icons.receipt_long_outlined;
-      case VetAppSection.operators:
-        return Icons.admin_panel_settings_outlined;
+        return FontAwesomeIcons.userDoctor;
+      case VetAppSection.technicians:
+        return FontAwesomeIcons.userNurse;
     }
   }
 
   Color get color {
     switch (this) {
-      case VetAppSection.staff:
-        return Colors.blue;
       case VetAppSection.petOwners:
-        return Colors.green;
-      case VetAppSection.appointments:
-        return Colors.purple;
-      case VetAppSection.services:
-        return Colors.orange;
-      case VetAppSection.billing:
-        return Colors.teal;
-      case VetAppSection.operators:
-        return Colors.blueGrey;
+        return Colors.blue;
       case VetAppSection.doctors:
-        return Colors.red;
+        return Colors.green;
+      case VetAppSection.technicians:
+        return Colors.orange;
     }
   }
 
   int get order {
     switch (this) {
-      case VetAppSection.staff:
-        return 0;
       case VetAppSection.petOwners:
-        return 1;
-      case VetAppSection.appointments:
-        return 2;
-      case VetAppSection.services:
-        return 3;
-      case VetAppSection.billing:
-        return 4;
-      case VetAppSection.operators:
-        return 5;
+        return 0;
       case VetAppSection.doctors:
-        return 6;
+        return 1;
+      case VetAppSection.technicians:
+        return 2;
     }
   }
 }
 
 // ── Persona / Role enum ───────────────────────────────────────────────────────
-enum ShalloonPersona { admin, manager, stylist, receptionist }
+enum VetApplicationEnums { admin, manager, stylist, receptionist }
 
-extension ShalloonPersonaX on ShalloonPersona {
+extension VetApplicationEnumsX on VetApplicationEnums {
   String get label {
     switch (this) {
-      case ShalloonPersona.admin:
+      case VetApplicationEnums.admin:
         return 'Admin';
-      case ShalloonPersona.manager:
+      case VetApplicationEnums.manager:
         return 'Manager';
-      case ShalloonPersona.stylist:
+      case VetApplicationEnums.stylist:
         return 'Stylist';
-      case ShalloonPersona.receptionist:
+      case VetApplicationEnums.receptionist:
         return 'Receptionist';
     }
   }

@@ -75,7 +75,6 @@ class VetApplicationBootstrap {
           if (useEmulators) {
             FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
             FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
-
             // Firestore rules require request.auth != null.
             // For local dev with emulators, ensure a signed-in Firebase user.
             if (FirebaseAuth.instance.currentUser == null) {

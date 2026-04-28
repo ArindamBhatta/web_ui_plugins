@@ -12,34 +12,12 @@ class VetApplication extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final isMobile = constraints.maxWidth < 900;
-
-        if (isMobile) {
-          return Scaffold(
-            appBar: AppBar(
-              centerTitle: false,
-              backgroundColor: Theme.of(context).colorScheme.primaryFixedDim,
-              foregroundColor: Theme.of(context).colorScheme.onPrimaryFixed,
-              title: const Text('Vet Application'),
-            ),
-            drawer: Drawer(
-              child: PluginLeftNavigation(
-                width: 280,
-                showHeader: false,
-                showCollapseToggle: false,
-                onItemTap: () => Navigator.of(context).pop(),
-              ),
-            ),
-            body: child,
-          );
-        }
-
         return Scaffold(
           body: Row(
             children: [
               const PluginLeftNavigation(
-                title: 'Shalloon',
-                width: 260,
+                title: 'Vet Application',
+                width: 280,
                 collapsedWidth: 56,
                 initiallyCollapsed: false,
                 showCollapseToggle: true,

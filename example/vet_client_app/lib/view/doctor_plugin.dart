@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:web_ui_plugins/web_ui_plugins.dart';
 
-import '../domain/enums/shalloon_enums.dart';
+import '../domain/enums/vet_application_enums.dart';
 import '../domain/models/doctor_model.dart';
 
 /// Doctors plugin descriptor.
@@ -20,8 +20,8 @@ final doctorsPlugin = PluginDescriptor<DoctorModel>(
     supportsUpload: true, // profile photo
   ),
   visibilityPolicy: PersonaPermissionPolicy({
-    ShalloonPersona.admin.label,
-    ShalloonPersona.manager.label,
+    VetApplicationEnums.admin.label,
+    VetApplicationEnums.manager.label,
   }),
   dataBinding: PluginDataBinding<DoctorModel>(
     collectionName: 'doctors', // Firestore collection name
