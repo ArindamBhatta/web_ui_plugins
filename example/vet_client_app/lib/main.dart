@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:vet_application/home/vet_application.dart';
+
 import 'package:web_ui_plugins/web_ui_plugins.dart';
 
-import 'app/bootstrap.dart';
-import 'home/shalloon_application.dart';
+import 'app/vet_application_bootstrap.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   try {
     //initializes Firebase, sets up the user, and registers plugins.
-    await ShalloonBootstrap.run(useEmulators: true);
+    await VetApplicationBootstrap.run(useEmulators: true);
 
     runApp(
       AppBootstrap.buildRouterApp(
@@ -18,7 +19,7 @@ void main() async {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
           useMaterial3: true,
         ),
-        shellBuilder: (context, child) => ShalloonApplication(child: child),
+        shellBuilder: (context, child) => VetApplication(child: child),
       ),
     );
   } catch (e) {

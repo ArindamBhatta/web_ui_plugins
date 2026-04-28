@@ -4,16 +4,16 @@ import 'package:go_router/go_router.dart';
 import 'package:web_ui_plugins/web_ui_plugins.dart';
 
 import '../domain/enums/shalloon_enums.dart';
-import '../domain/models/client_model.dart';
+import '../domain/models/pet_owner_model.dart';
 
 // Single Source of Truth: - It describes everything the framework needs to know about a plugin/module: its unique ID, display info, routes, data binding, permissions, and features.
-final PluginDescriptor<ClientModel>
-clientPlugin = PluginDescriptor<ClientModel>(
-  moduleId: 'clients',
-  title: ShalloonSection.clients.label,
-  icon: ShalloonSection.clients.icon,
-  color: ShalloonSection.clients.color,
-  order: ShalloonSection.clients.order,
+final PluginDescriptor<PetOwnerModel>
+petOwnerPlugin = PluginDescriptor<PetOwnerModel>(
+  moduleId: 'pet-owners',
+  title: VetAppSection.petOwners.label,
+  icon: VetAppSection.petOwners.icon,
+  color: VetAppSection.petOwners.color,
+  order: VetAppSection.petOwners.order,
 
   /// Optional feature flags that the framework can use to conditionally enable/disable functionality. The plugin author declares which features they use, and the framework handles the rest.
   features: const PluginFeatureFlags(
@@ -31,10 +31,10 @@ clientPlugin = PluginDescriptor<ClientModel>(
   }),
 
   /// Data binding: collection, serializer, empty factory. The framework uses this to generate a repo and sync with Firestore. The plugin author only writes the model and the fromJson logic, and the framework handles the rest.
-  dataBinding: PluginDataBinding<ClientModel>(
+  dataBinding: PluginDataBinding<PetOwnerModel>(
     collectionName: 'clients',
-    fromJson: ClientModel.formJson,
-    createEmpty: ClientModel.new,
+    fromJson: PetOwnerModel.fromJson,
+    createEmpty: PetOwnerModel.new,
   ),
 
   /// Routes: path, builder, and optional access policy. The framework uses this to generate GoRouter routes and enforce permissions. The plugin author only writes the builder logic, and the framework handles the rest.
@@ -53,15 +53,15 @@ class ClientSectionPage extends StatelessWidget {
 
   const ClientSectionPage({super.key, this.initialSelectedItemId});
 
-  SectionRepo<ClientModel> _resolveRepo(BuildContext context) {
+  SectionRepo<PetOwnerModel> _resolveRepo(BuildContext context) {
     try {
-      return RepositoryProvider.of<SectionRepo<ClientModel>>(context);
+      return RepositoryProvider.of<SectionRepo<PetOwnerModel>>(context);
     } catch (_) {
-      final binding = clientPlugin.dataBinding;
-      return SectionRepo<ClientModel>(
-        moduleId: clientPlugin.moduleId,
-        service: FirestoreService<ClientModel>(
-          moduleId: clientPlugin.moduleId,
+      final binding = petOwnerPlugin.dataBinding;
+      return SectionRepo<PetOwnerModel>(
+        moduleId: petOwnerPlugin.moduleId,
+        service: FirestoreService<PetOwnerModel>(
+          moduleId: petOwnerPlugin.moduleId,
           collectionName: binding.collectionName,
           fromJson: binding.fromJson,
         ),
@@ -69,40 +69,42 @@ class ClientSectionPage extends StatelessWidget {
     }
   }
 
-  Widget _buildSection(BuildContext context, SectionRepo<ClientModel> repo) {
-    final cubit = BlocProvider.of<FormCubit<ClientModel>>(context);
+  Widget _buildSection(BuildContext context, SectionRepo<PetOwnerModel> repo) {
+    final cubit = BlocProvider.of<FormCubit<PetOwnerModel>>(context);
 
-    return SectionWidget<ClientModel>(
-      sectionLabel: ShalloonSection.clients.label,
-      sectionIcon: ShalloonSection.clients.icon,
-      sectionColor: ShalloonSection.clients.color,
-      sectionTitle: 'Clients',
+    return SectionWidget<PetOwnerModel>(
+      sectionLabel: VetAppSection.petOwners.label,
+      sectionIcon: VetAppSection.petOwners.icon,
+      sectionColor: VetAppSection.petOwners.color,
+      sectionTitle: 'Pet Owners',
       repo: repo,
       formCubit: cubit,
       initialSelectedItemId: initialSelectedItemId,
-      createEmptyModel: ClientModel.new,
+      createEmptyModel: PetOwnerModel.new,
 
-      rebuildDataModel: (data) => ClientModel(
+      rebuildDataModel: (data) => PetOwnerModel(
         id: data['id'] as String?,
         name: data['name'] as String?,
+        address: data['address'] as String?,
         mobile: data['mobile'] as String?,
+        alternateMobile: data['alternateMobile'] as String?,
         email: data['email'] as String?,
         whatsapp: data['whatsapp'] as String?,
-        address: data['address'] as String?,
-        photoUrl: data['photoUrl'] as String?,
-        tags: (data['tags'] as List<dynamic>?)?.cast<String>(),
+        pincode: data['pincode'] as String?,
       ),
 
       initialTabDetailBuilder: (item, ctx) => FormPageView(
-        formCubit: BlocProvider.of<FormCubit<ClientModel>>(ctx),
+        formCubit: BlocProvider.of<FormCubit<PetOwnerModel>>(ctx),
         dataModel: item,
-        rebuildDataModel: (data) => ClientModel(
+        rebuildDataModel: (data) => PetOwnerModel(
           id: data['id'] as String?,
           name: data['name'] as String?,
+          address: data['address'] as String?,
           mobile: data['mobile'] as String?,
+          alternateMobile: data['alternateMobile'] as String?,
           email: data['email'] as String?,
           whatsapp: data['whatsapp'] as String?,
-          address: data['address'] as String?,
+          pincode: data['pincode'] as String?,
         ),
         fields: [
           WidgetConfig(
@@ -112,6 +114,15 @@ class ClientSectionPage extends StatelessWidget {
             initialValue: item.name,
             mandatory: true,
           ),
+
+          WidgetConfig(
+            key: 'address',
+            fieldType: FieldType.address,
+            labelText: 'Address',
+            initialValue: item.address,
+            mandatory: false,
+          ),
+
           WidgetConfig(
             key: 'mobile',
             fieldType: FieldType.mobileNumber,
@@ -119,11 +130,12 @@ class ClientSectionPage extends StatelessWidget {
             initialValue: item.mobile,
             mandatory: true,
           ),
+
           WidgetConfig(
-            key: 'whatsapp',
-            fieldType: FieldType.whatsapp,
-            labelText: 'WhatsApp',
-            initialValue: item.whatsapp,
+            key: 'alternateMobile',
+            fieldType: FieldType.mobileNumber,
+            labelText: 'Alternate Mobile',
+            initialValue: item.alternateMobile,
             mandatory: false,
           ),
           WidgetConfig(
@@ -134,10 +146,18 @@ class ClientSectionPage extends StatelessWidget {
             mandatory: false,
           ),
           WidgetConfig(
-            key: 'address',
+            key: 'whatsapp',
+            fieldType: FieldType.whatsapp,
+            labelText: 'WhatsApp',
+            initialValue: item.whatsapp,
+            mandatory: false,
+          ),
+
+          WidgetConfig(
+            key: 'pincode',
             fieldType: FieldType.address,
-            labelText: 'Address',
-            initialValue: item.address,
+            labelText: 'Pincode',
+            initialValue: item.pincode,
             mandatory: false,
           ),
         ],
@@ -148,9 +168,9 @@ class ClientSectionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final repo = _resolveRepo(context);
-    FormCubit<ClientModel>? existingCubit;
+    FormCubit<PetOwnerModel>? existingCubit;
     try {
-      existingCubit = BlocProvider.of<FormCubit<ClientModel>>(context);
+      existingCubit = BlocProvider.of<FormCubit<PetOwnerModel>>(context);
     } catch (_) {
       existingCubit = null;
     }
@@ -159,8 +179,8 @@ class ClientSectionPage extends StatelessWidget {
       return _buildSection(context, repo);
     }
 
-    return BlocProvider<FormCubit<ClientModel>>(
-      create: (_) => FormCubit<ClientModel>(repo: repo),
+    return BlocProvider<FormCubit<PetOwnerModel>>(
+      create: (_) => FormCubit<PetOwnerModel>(repo: repo),
       child: Builder(builder: (ctx) => _buildSection(ctx, repo)),
     );
   }

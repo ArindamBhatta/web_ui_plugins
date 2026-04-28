@@ -1,5 +1,5 @@
-name: shaloon_web
-description: "Shaloon — SaaS salon/clinic admin web app built on web_ui_plugins."
+name: vet_application
+description: "Vet Application — SaaS veterinary clinic admin web app built on web_ui_plugins."
 version: 1.0.0+1
 publish_to: "none"
 

@@ -3,10 +3,10 @@ import 'package:web_ui_plugins/web_ui_plugins.dart';
 
 /// App shell — generated from the plugin registry.
 /// The sidebar and routes are never hard-coded here; they come from registered plugins.
-class ShalloonApplication extends StatelessWidget {
+class VetApplication extends StatelessWidget {
   final Widget child;
 
-  const ShalloonApplication({super.key, required this.child});
+  const VetApplication({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class ShalloonApplication extends StatelessWidget {
               centerTitle: false,
               backgroundColor: Theme.of(context).colorScheme.primaryFixedDim,
               foregroundColor: Theme.of(context).colorScheme.onPrimaryFixed,
-              title: const Text('Shalloon'),
+              title: const Text('Vet Application'),
             ),
             drawer: Drawer(
               child: PluginLeftNavigation(

@@ -115,9 +115,7 @@ class _FormMultiSelectFieldState<T extends DataModel>
 
   void _sortItems() {
     if (widget.sortBy == SortBy.id) {
-      widget.items.sort(
-        (a, b) => int.parse(a.uid!).compareTo(int.parse(b.uid!)),
-      );
+      widget.items.sort((a, b) => _compareIds(a.uid, b.uid));
     } else if (widget.sortBy == SortBy.name) {
       widget.items.sort((a, b) {
         final aLabel = widget.itemLabelFn(a).toLowerCase();
@@ -128,6 +126,19 @@ class _FormMultiSelectFieldState<T extends DataModel>
             : aLabel.compareTo(bLabel);
       });
     }
+  }
+
+  int _compareIds(String? a, String? b) {
+    final aId = a ?? '';
+    final bId = b ?? '';
+    final aAsNum = int.tryParse(aId);
+    final bAsNum = int.tryParse(bId);
+
+    if (aAsNum != null && bAsNum != null) {
+      return aAsNum.compareTo(bAsNum);
+    }
+
+    return aId.toLowerCase().compareTo(bId.toLowerCase());
   }
 
   // ----------------------------------------------------------

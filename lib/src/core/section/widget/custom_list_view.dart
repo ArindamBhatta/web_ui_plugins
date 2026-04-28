@@ -75,13 +75,26 @@ class _CustomListViewState extends State<CustomListView>
         case SortBy.name:
           return a.title?.compareTo(b.title ?? '') ?? 0;
         case SortBy.id:
-          return int.parse(a.uid ?? '0').compareTo(int.parse(b.uid ?? '0'));
+          return _compareIds(a.uid, b.uid);
       }
     });
     if (widget.sortOrder == SortOrder.descending) {
       return data.reversed.toList();
     }
     return data;
+  }
+
+  int _compareIds(String? a, String? b) {
+    final aId = a ?? '';
+    final bId = b ?? '';
+    final aAsNum = int.tryParse(aId);
+    final bAsNum = int.tryParse(bId);
+
+    if (aAsNum != null && bAsNum != null) {
+      return aAsNum.compareTo(bAsNum);
+    }
+
+    return aId.toLowerCase().compareTo(bId.toLowerCase());
   }
 
   int? _findSelectedIndex(List<DataModel> sortedData) {

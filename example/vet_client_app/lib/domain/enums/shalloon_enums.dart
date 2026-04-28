@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 // ── Section enum ──────────────────────────────────────────────────────────────
 // The developer just adds values here; the plugin registry generates the sidebar.
-enum ShalloonSection {
-  // People
+enum VetAppSection {
   staff,
-  clients,
+  petOwners,
+  doctors,
 
   // Operations
   appointments,
@@ -16,72 +16,80 @@ enum ShalloonSection {
   operators,
 }
 
-extension ShalloonSectionX on ShalloonSection {
+extension VetAppSectionX on VetAppSection {
   String get label {
     switch (this) {
-      case ShalloonSection.staff:
+      case VetAppSection.staff:
         return 'Staff';
-      case ShalloonSection.clients:
-        return 'Clients';
-      case ShalloonSection.appointments:
+      case VetAppSection.petOwners:
+        return 'Pet Owners';
+      case VetAppSection.doctors:
+        return 'Doctors';
+      case VetAppSection.appointments:
         return 'Appointments';
-      case ShalloonSection.services:
+      case VetAppSection.services:
         return 'Services';
-      case ShalloonSection.billing:
+      case VetAppSection.billing:
         return 'Billing';
-      case ShalloonSection.operators:
+      case VetAppSection.operators:
         return 'Operators';
     }
   }
 
   IconData get icon {
     switch (this) {
-      case ShalloonSection.staff:
+      case VetAppSection.staff:
         return Icons.badge_outlined;
-      case ShalloonSection.clients:
+      case VetAppSection.petOwners:
         return Icons.people_alt_outlined;
-      case ShalloonSection.appointments:
+      case VetAppSection.doctors:
+        return Icons.local_hospital_outlined;
+      case VetAppSection.appointments:
         return Icons.calendar_today_outlined;
-      case ShalloonSection.services:
+      case VetAppSection.services:
         return Icons.content_cut_outlined;
-      case ShalloonSection.billing:
+      case VetAppSection.billing:
         return Icons.receipt_long_outlined;
-      case ShalloonSection.operators:
+      case VetAppSection.operators:
         return Icons.admin_panel_settings_outlined;
     }
   }
 
   Color get color {
     switch (this) {
-      case ShalloonSection.staff:
+      case VetAppSection.staff:
         return Colors.blue;
-      case ShalloonSection.clients:
+      case VetAppSection.petOwners:
         return Colors.green;
-      case ShalloonSection.appointments:
+      case VetAppSection.appointments:
         return Colors.purple;
-      case ShalloonSection.services:
+      case VetAppSection.services:
         return Colors.orange;
-      case ShalloonSection.billing:
+      case VetAppSection.billing:
         return Colors.teal;
-      case ShalloonSection.operators:
+      case VetAppSection.operators:
         return Colors.blueGrey;
+      case VetAppSection.doctors:
+        return Colors.red;
     }
   }
 
   int get order {
     switch (this) {
-      case ShalloonSection.staff:
+      case VetAppSection.staff:
         return 0;
-      case ShalloonSection.clients:
+      case VetAppSection.petOwners:
         return 1;
-      case ShalloonSection.appointments:
+      case VetAppSection.appointments:
         return 2;
-      case ShalloonSection.services:
+      case VetAppSection.services:
         return 3;
-      case ShalloonSection.billing:
+      case VetAppSection.billing:
         return 4;
-      case ShalloonSection.operators:
+      case VetAppSection.operators:
         return 5;
+      case VetAppSection.doctors:
+        return 6;
     }
   }
 }

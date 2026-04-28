@@ -1,59 +1,59 @@
 // ignore_for_file: must_be_immutable
 import 'package:web_ui_plugins/web_ui_plugins.dart';
 
-/// Client model — the minimal model a developer defines to onboard a new section.
-class ClientModel extends DataModel {
+/// Pet owner model — the minimal model a developer defines to onboard a new section.
+class PetOwnerModel extends DataModel {
   String? id;
   String? name;
+  String? address;
   String? mobile;
+  String? alternateMobile;
   String? email;
   String? whatsapp;
-  String? address;
-  String? photoUrl;
-  List<String>? tags; // e.g. 'VIP', 'Regular', 'New'
+  String? pincode;
 
-  ClientModel({
+  PetOwnerModel({
     this.id,
     this.name,
+    this.address,
     this.mobile,
+    this.alternateMobile,
     this.email,
     this.whatsapp,
-    this.address,
-    this.photoUrl,
-    this.tags,
+    this.pincode,
   });
 
-  ClientModel copyWith({
+  PetOwnerModel copyWith({
     String? id,
     String? name,
+    String? address,
     String? mobile,
+    String? alternateMobile,
     String? email,
     String? whatsapp,
-    String? address,
-    String? photoUrl,
-    List<String>? tags,
+    String? pincode,
   }) {
-    return ClientModel(
+    return PetOwnerModel(
       id: id ?? this.id,
       name: name ?? this.name,
+      address: address ?? this.address,
       mobile: mobile ?? this.mobile,
+      alternateMobile: alternateMobile ?? this.alternateMobile,
       email: email ?? this.email,
       whatsapp: whatsapp ?? this.whatsapp,
-      address: address ?? this.address,
-      photoUrl: photoUrl ?? this.photoUrl,
-      tags: tags ?? this.tags,
+      pincode: pincode ?? this.pincode,
     );
   }
 
-  ClientModel.formJson(Map<String, dynamic> json) {
+  PetOwnerModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    address = json['address'];
     mobile = json['mobile'];
+    alternateMobile = json['alternateMobile'];
     email = json['email'];
     whatsapp = json['whatsapp'];
-    address = json['address'] as String?;
-    photoUrl = json['photoUrl'] as String?;
-    tags = json['tags'];
+    pincode = json['pincode'];
   }
 
   @override
@@ -61,12 +61,12 @@ class ClientModel extends DataModel {
     final Map<String, dynamic> data = {};
     data['id'] = id;
     data['name'] = name;
+    data['address'] = address;
     data['mobile'] = mobile;
+    data['alternateMobile'] = alternateMobile;
     data['email'] = email;
     data['whatsapp'] = whatsapp;
-    data['address'] = address;
-    data['photoUrl'] = photoUrl;
-    data['tags'] = tags;
+    data['pincode'] = pincode;
     return data;
   }
 

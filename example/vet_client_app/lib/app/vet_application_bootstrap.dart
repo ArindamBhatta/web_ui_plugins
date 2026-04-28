@@ -4,13 +4,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:web_ui_plugins/firebase_options.dart';
 import 'package:web_ui_plugins/web_ui_plugins.dart';
 
-import '../view/client_plugin.dart';
-import '../view/staff_plugin.dart';
+import '../view/pet_owner_plugin.dart';
+import '../view/doctor_plugin.dart';
 
 /// All app wiring in one place.
-/// main.dart calls [ShalloonBootstrap.run].
-class ShalloonBootstrap {
-  ShalloonBootstrap._();
+/// main.dart calls [VetApplicationBootstrap.run].
+
+class VetApplicationBootstrap {
+  /// Private constructor to prevent instantiation.
+  VetApplicationBootstrap._();
 
   /// Local setup for development — initializes Firebase, sets a dev user, and registers plugins.
   static Future<void> run({bool useEmulators = false}) async {
@@ -46,6 +48,6 @@ class ShalloonBootstrap {
     );
 
     // Step 3: Register plugins — this is the entire app configuration
-    await AppBootstrap.registerPlugins([staffPlugin, clientPlugin]);
+    await AppBootstrap.registerPlugins([doctorsPlugin, petOwnerPlugin]);
   }
 }

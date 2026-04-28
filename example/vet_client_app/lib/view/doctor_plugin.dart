@@ -1,0 +1,192 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:web_ui_plugins/web_ui_plugins.dart';
+
+import '../domain/enums/shalloon_enums.dart';
+import '../domain/models/doctor_model.dart';
+
+/// Doctors plugin descriptor.
+/// This is the entire surface area the developer fills in to add a new section.
+final doctorsPlugin = PluginDescriptor<DoctorModel>(
+  moduleId: 'doctors',
+  title: VetAppSection.doctors.label,
+  icon: VetAppSection.doctors.icon,
+  color: VetAppSection.doctors.color,
+  order: VetAppSection.doctors.order,
+  features: const PluginFeatureFlags(
+    supportsCrud: true,
+    supportsRealtime: true,
+    supportsUpload: true, // profile photo
+  ),
+  visibilityPolicy: PersonaPermissionPolicy({
+    ShalloonPersona.admin.label,
+    ShalloonPersona.manager.label,
+  }),
+  dataBinding: PluginDataBinding<DoctorModel>(
+    collectionName: 'doctors', // Firestore collection name
+    fromJson: DoctorModel.fromJson,
+    createEmpty: DoctorModel.new,
+  ),
+  routes: [
+    PluginRouteDescriptor(
+      path: '/doctors', // Navigates
+      builder: (BuildContext ctx, GoRouterState state) => DoctorsSectionPage(
+        initialSelectedItemId: state.uri.queryParameters['selected'],
+      ),
+    ),
+  ],
+);
+
+/// Doctors section page — the developer writes this view.
+/// The framework handles data, state, list, form, and dialog.
+class DoctorsSectionPage extends StatelessWidget {
+  final String? initialSelectedItemId;
+
+  const DoctorsSectionPage({super.key, this.initialSelectedItemId});
+
+  SectionRepo<DoctorModel> _resolveRepo(BuildContext context) {
+    try {
+      return RepositoryProvider.of<SectionRepo<DoctorModel>>(context);
+    } catch (_) {
+      final binding = doctorsPlugin.dataBinding;
+      return SectionRepo<DoctorModel>(
+        moduleId: doctorsPlugin.moduleId,
+        service: FirestoreService<DoctorModel>(
+          moduleId: doctorsPlugin.moduleId,
+          collectionName: binding.collectionName,
+          fromJson: binding.fromJson,
+        ),
+      );
+    }
+  }
+
+  Widget _buildSection(BuildContext context, SectionRepo<DoctorModel> repo) {
+    final cubit = BlocProvider.of<FormCubit<DoctorModel>>(context);
+
+    return SectionWidget<DoctorModel>(
+      sectionLabel: VetAppSection.doctors.label,
+      sectionIcon: VetAppSection.doctors.icon,
+      sectionColor: VetAppSection.doctors.color,
+      sectionTitle: 'Doctors',
+      repo: repo,
+      formCubit: cubit,
+      initialSelectedItemId: initialSelectedItemId,
+      createEmptyModel: DoctorModel.new,
+
+      rebuildDataModel: (data) => DoctorModel(
+        id: data['id'] as String?,
+        active: data['active'] as String?,
+        name: data['name'] as String?,
+        qualifications: data['qualifications'] as String?,
+        registrationNumber: data['registrationNumber'] as String?,
+        mobile: data['mobile'] as String?,
+        alternateMobile: data['alternateMobile'] as String?,
+        whatsapp: data['whatsapp'] as String?,
+        email: data['email'] as String?,
+        fee: data['fee'] as String?,
+        dob: data['dob'] as String?,
+      ),
+
+      initialTabDetailBuilder: (item, ctx) => FormPageView(
+        formCubit: BlocProvider.of<FormCubit<DoctorModel>>(ctx),
+        dataModel: item,
+        rebuildDataModel: (data) => DoctorModel(
+          id: data['id'] as String?,
+          active: data['active'] as String?,
+          name: data['name'] as String?,
+          qualifications: data['qualifications'] as String?,
+          registrationNumber: data['registrationNumber'] as String?,
+          mobile: data['mobile'] as String?,
+          alternateMobile: data['alternateMobile'] as String?,
+          whatsapp: data['whatsapp'] as String?,
+          email: data['email'] as String?,
+          fee: data['fee'] as String?,
+          dob: data['dob'] as String?,
+        ),
+        fields: [
+          WidgetConfig(
+            key: 'name',
+            fieldType: FieldType.name,
+            labelText: 'Full Name',
+            initialValue: item.name,
+            mandatory: true,
+          ),
+          WidgetConfig(
+            key: 'qualifications',
+            fieldType: FieldType.name,
+            labelText: 'Qualifications',
+            initialValue: item.qualifications,
+            mandatory: false,
+          ),
+          WidgetConfig(
+            key: 'registrationNumber',
+            fieldType: FieldType.name,
+            labelText: 'Registration Number',
+            initialValue: item.registrationNumber,
+            mandatory: false,
+          ),
+          WidgetConfig(
+            key: 'mobile',
+            fieldType: FieldType.mobileNumber,
+            labelText: 'Mobile',
+            initialValue: item.mobile,
+            mandatory: false,
+          ),
+          WidgetConfig(
+            key: 'alternateMobile',
+            fieldType: FieldType.mobileNumber,
+            labelText: 'Alternate Mobile',
+            initialValue: item.alternateMobile,
+            mandatory: false,
+          ),
+          WidgetConfig(
+            key: 'whatsapp',
+            fieldType: FieldType.mobileNumber,
+            labelText: 'WhatsApp',
+            initialValue: item.whatsapp,
+            mandatory: false,
+          ),
+          WidgetConfig(
+            key: 'email',
+            fieldType: FieldType.email,
+            labelText: 'Email',
+            initialValue: item.email,
+          ),
+          WidgetConfig(
+            key: 'fee',
+            fieldType: FieldType.name,
+            labelText: 'Fee',
+            initialValue: item.fee,
+          ),
+          WidgetConfig(
+            key: 'dob',
+            fieldType: FieldType.date,
+            labelText: 'Date of Birth',
+            initialValue: item.dob,
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final repo = _resolveRepo(context);
+    FormCubit<DoctorModel>? existingCubit;
+    try {
+      existingCubit = BlocProvider.of<FormCubit<DoctorModel>>(context);
+    } catch (_) {
+      existingCubit = null;
+    }
+
+    if (existingCubit != null) {
+      return _buildSection(context, repo);
+    }
+
+    return BlocProvider<FormCubit<DoctorModel>>(
+      create: (_) => FormCubit<DoctorModel>(repo: repo),
+      child: Builder(builder: (ctx) => _buildSection(ctx, repo)),
+    );
+  }
+}
