@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:web_ui_plugins/core/widgets/globals.dart';
-import 'package:web_ui_plugins/src/core/contracts/plugin_descriptor.dart';
-import 'package:web_ui_plugins/src/core/permissions/permission_middleware.dart';
-import 'package:web_ui_plugins/src/core/registry/plugin_registry.dart';
-import 'package:web_ui_plugins/src/core/widgets/custom_snack_bar.dart';
+import 'package:web_ui_plugins/web_ui_plugins.dart';
 
 class PluginLeftNavigation extends StatelessWidget {
   final double width;

@@ -55,6 +55,8 @@ export 'src/core/widgets/custom_dialog_box.dart';
 export 'src/core/widgets/custom_snack_bar.dart';
 export 'src/core/widgets/custom_textfield.dart';
 export 'src/core/widgets/customizable_search_bar.dart';
+//globals
+export 'src/core/contracts/globals.dart';
 export 'src/core/widgets/package_enums.dart';
 
 // ── Utility functions ─────────────────────────────────────────────────────────

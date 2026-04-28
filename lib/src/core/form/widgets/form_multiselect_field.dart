@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:web_ui_plugins/core/widgets/globals.dart';
-import 'package:web_ui_plugins/src/core/widgets/custom_button.dart';
-import 'package:web_ui_plugins/src/core/widgets/custom_dialog_box.dart';
-import 'package:web_ui_plugins/src/core/widgets/custom_textfield.dart';
-import 'package:web_ui_plugins/src/core/widgets/customizable_search_bar.dart';
 import 'package:web_ui_plugins/src/core/widgets/package_enums.dart';
-import 'package:web_ui_plugins/src/core/contracts/data_model.dart';
+import 'package:web_ui_plugins/web_ui_plugins.dart';
 
 class FormMultiSelectField<T extends DataModel> extends StatefulWidget {
   final String? labelText;

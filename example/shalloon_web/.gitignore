@@ -1,0 +1,31 @@
+# Misc
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Dart / Flutter tool state
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.metadata
+.pub/
+.pub-cache/
+
+# Build outputs
+build/
+build/web/
+coverage/
+
+# Firebase / emulator logs
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+.firebase/

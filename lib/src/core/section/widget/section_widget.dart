@@ -1,22 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:web_ui_plugins/src/core/form/cubit/form_cubit.dart';
-import 'package:web_ui_plugins/src/core/form/form_page.dart';
-import 'package:web_ui_plugins/src/core/form/repo/form_repo_mixin.dart';
-import 'package:web_ui_plugins/src/core/section/cubit/section_cubit.dart';
-import 'package:web_ui_plugins/src/core/section/widget/custom_list_view.dart';
-import 'package:web_ui_plugins/src/core/section/widget/no_data_view.dart';
-import 'package:web_ui_plugins/src/core/section/widget/section_view.dart';
-import 'package:web_ui_plugins/src/core/section/widget/sub_section_view.dart';
-import 'package:web_ui_plugins/src/core/widgets/custom_button.dart';
-import 'package:web_ui_plugins/src/core/widgets/custom_dialog_box.dart';
-import 'package:web_ui_plugins/src/core/widgets/custom_snack_bar.dart';
-import 'package:web_ui_plugins/src/core/widgets/customizable_search_bar.dart';
-import 'package:web_ui_plugins/src/core/widgets/package_enums.dart'
-  show SuccessStatus;
-import 'package:web_ui_plugins/core/widgets/globals.dart' show Globals;
-
-import 'package:web_ui_plugins/src/core/contracts/data_model.dart';
+import 'package:web_ui_plugins/src/core/widgets/package_enums.dart';
+import 'package:web_ui_plugins/web_ui_plugins.dart';
 
 // Cubit for Section UI state
 
@@ -464,8 +449,8 @@ class _SectionState<T extends DataModel> extends State<SectionWidget<T>> {
                                         'No ${widget.sectionTitle} Information',
                                     subtitle:
                                         'Please select ${widget.sectionTitle.toLowerCase()} to view details.',
-                                  icon: widget.sectionIcon,
-                                  iconColor: widget.sectionColor,
+                                    icon: widget.sectionIcon,
+                                    iconColor: widget.sectionColor,
                                   );
                           },
                         ),

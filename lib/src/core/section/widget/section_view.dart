@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:web_ui_plugins/core/widgets/globals.dart';
+import 'package:web_ui_plugins/web_ui_plugins.dart';
 
 class SectionView extends StatelessWidget {
   final Widget child;

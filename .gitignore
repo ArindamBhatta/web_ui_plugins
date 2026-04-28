@@ -27,11 +27,31 @@ migrate_working_dir/
 **/doc/api/
 **/ios/Flutter/.last_build_id
 .dart_tool/
+**/.dart_tool/
 .flutter-plugins-dependencies
+.flutter-plugins
 .pub-cache/
 .pub/
 /build/
+**/build/
+**/build/web/
+**/build/flutter_assets/
+**/build/native_assets/
+**/build/native_hooks/
 /coverage/
+**/coverage/
+
+# Flutter generated internals
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/.packages
+**/.metadata
+
+# Firebase / emulator logs
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+.firebase/
 
 # Symbolication related
 app.*.symbols
