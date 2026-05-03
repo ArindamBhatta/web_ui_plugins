@@ -12,7 +12,7 @@ void main() async {
 
   // Paste your new Firebase project values here.
   // Keep empty to use the generated DefaultFirebaseOptions.
-  const customFirebaseConfig = VetFirebaseApiConfig(
+  const customFirebaseConfig = FirebaseApiConfig(
     apiKey: 'AIzaSyD0J_5aqolfSn9uDnkcVfVvyrQjZc2gaBg',
     appId: '1:593360566365:web:ed338bacd98cdb509075b4',
     messagingSenderId: '593360566365',
@@ -22,7 +22,8 @@ void main() async {
     measurementId: 'G-RK7YFJGJJC',
   );
 
-  final firebaseConfig = customFirebaseConfig.isComplete
+  /// use getter to check if the config is complete, otherwise pass null to use default options.
+  final FirebaseApiConfig? firebaseConfig = customFirebaseConfig.isComplete
       ? customFirebaseConfig
       : null;
 

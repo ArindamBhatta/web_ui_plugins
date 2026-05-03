@@ -3,11 +3,11 @@ import 'package:web_ui_plugins/src/core/contracts/permission_contract.dart';
 import 'package:web_ui_plugins/src/core/contracts/plugin_descriptor.dart';
 
 /// Resolved and active plugin entry, stored after successful registration.
-class RegistedPlugin<T extends DataModel> {
+class RegisteredPlugin<T extends DataModel> {
   final PluginDescriptor<T> descriptor;
   final DateTime registeredAt;
 
-  RegistedPlugin(this.descriptor) : registeredAt = DateTime.now();
+  RegisteredPlugin(this.descriptor) : registeredAt = DateTime.now();
 }
 
 /// Central plugin registry.
@@ -17,7 +17,7 @@ class PluginRegistry {
   PluginRegistry._();
   static final PluginRegistry instance = PluginRegistry._();
 
-  final List<RegistedPlugin> _plugins = [];
+  final List<RegisteredPlugin> _plugins = [];
 
   /// Register a plugin. Throws if a plugin with the same [moduleId] is
   /// already registered (guards against double-registration on hot reload).
@@ -30,12 +30,12 @@ class PluginRegistry {
     if (alreadyExists) return; // idempotent on hot reload
 
     await descriptor.onRegister?.call();
-    _plugins.add(RegistedPlugin<T>(descriptor));
+    _plugins.add(RegisteredPlugin<T>(descriptor));
   }
 
   /// Unregister a plugin by moduleId (used in tests or dynamic plugin removal).
   Future<void> unregister(String moduleId) async {
-    final plugin = _plugins.cast<RegistedPlugin?>().firstWhere(
+    final plugin = _plugins.cast<RegisteredPlugin?>().firstWhere(
       (p) => p?.descriptor.moduleId == moduleId,
       orElse: () => null,
     );
@@ -45,14 +45,14 @@ class PluginRegistry {
   }
 
   /// All registered plugins, sorted by [order].
-  List<RegistedPlugin> get all {
-    final sorted = List<RegistedPlugin>.from(_plugins);
+  List<RegisteredPlugin> get all {
+    final sorted = List<RegisteredPlugin>.from(_plugins);
     sorted.sort((a, b) => a.descriptor.order.compareTo(b.descriptor.order));
     return sorted;
   }
 
   /// Plugins visible to [user] after evaluating each plugin's visibility policy.
-  List<RegistedPlugin> visibleTo(UserIdentity user) {
+  List<RegisteredPlugin> visibleTo(UserIdentity user) {
     return all.where((p) {
       final policy = p.descriptor.visibilityPolicy;
       if (policy == null) return true;
@@ -65,8 +65,8 @@ class PluginRegistry {
   }
 
   /// Find a plugin by moduleId.
-  RegistedPlugin? findById(String moduleId) {
-    return all.cast<RegistedPlugin?>().firstWhere(
+  RegisteredPlugin? findById(String moduleId) {
+    return all.cast<RegisteredPlugin?>().firstWhere(
       (p) => p?.descriptor.moduleId == moduleId,
       orElse: () => null,
     );

@@ -10,10 +10,8 @@ import 'package:web_ui_plugins/src/core/registry/plugin_registry.dart';
 import 'package:web_ui_plugins/src/adapters/firebase/firestore_service.dart';
 import 'package:web_ui_plugins/src/core/form/cubit/form_cubit.dart';
 
-/// Configuration passed to [AppBootstrap.initialize].
+/// Setup and configuration for the app shell, including Firebase initialization and plugin registration.
 class BootstrapConfig {
-  /// Firebase adapter initialization callback.
-  /// Typically: Firebase.initializeApp(options: ...) plus emulator setup.
   final Future<void> Function() initializeFirebase;
 
   /// Default permission policy when a plugin doesn't declare its own.
@@ -35,7 +33,7 @@ class BootstrapConfig {
 /// ```dart
 /// await AppBootstrap.initialize(config: BootstrapConfig(...));
 /// await AppBootstrap.registerPlugins([staffPlugin, clientPlugin]);
-/// runApp(AppBootstrap.buildApp(shell: ShaloonShell()));
+/// runApp(AppBootstrap.buildApp(shell: VetClientShell()));
 /// ```
 class AppBootstrap {
   AppBootstrap._();
@@ -43,25 +41,32 @@ class AppBootstrap {
   static const String forbiddenPath = '/forbidden';
   static const String noPluginsPath = '/no-plugins';
 
+  ///initialize firebase private property can't access outside.
   static BootstrapConfig? _config;
-  static bool _initialized = false;
 
+  /// Expose the config for internal use by plugins and services.
   static BootstrapConfig get config {
-    assert(_config != null, 'Call AppBootstrap.initialize() first.');
+    if (_config == null) {
+      throw StateError(
+        'AppBootstrap not initialized. Call AppBootstrap.initialize() first.',
+      );
+    }
     return _config!;
   }
 
-  /// Step 1: Initialize Firebase and framework config.
+  /// make singleton and enforce initialization before access to config.
+  static bool _instance = false;
+
+  /// Step 1: UI call Initialize Firebase package config.
   static Future<void> initialize({required BootstrapConfig config}) async {
-    if (_initialized) return;
+    if (_instance) return;
     _config = config;
     await config.initializeFirebase();
-    _initialized = true;
+    _instance = true;
   }
 
-  /// Step 2: Register all plugins.
-  /// Each plugin's service and repo are created inside scoped registry —
-  /// no manual provider wiring needed.
+  /// Step 2: Register all plugins. repository, cubit, and routes are automatically setup from the plugin descriptors.
+  /// which plugins should appear in the sidebar
   static Future<void> registerPlugins(List<PluginDescriptor> plugins) async {
     for (final plugin in plugins) {
       await PluginRegistry.instance.register(plugin);
@@ -77,7 +82,7 @@ class AppBootstrap {
     ThemeMode? themeMode,
     String title = '',
   }) {
-    final providers = _buildProviders();
+    final List<RepositoryProvider> providers = _buildProviders();
     return MultiRepositoryProvider(
       providers: providers,
       child: Builder(
@@ -259,7 +264,7 @@ class AppBootstrap {
 
   /// Reset for testing.
   static void reset() {
-    _initialized = false;
+    _instance = false;
     _config = null;
     PluginRegistry.instance.reset();
   }

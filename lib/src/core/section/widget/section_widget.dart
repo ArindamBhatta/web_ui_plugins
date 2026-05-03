@@ -263,6 +263,7 @@ class _SectionState<T extends DataModel> extends State<SectionWidget<T>> {
             return Center(
               child: Text(
                 'Error loading ${widget.sectionTitle}. Please try again.',
+
                 style: TextStyle(color: Theme.of(context).colorScheme.error),
               ),
             );

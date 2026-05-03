@@ -8,7 +8,7 @@ import '../view/doctor_plugin.dart';
 
 /// Optional Firebase config for connecting this example app to a different
 /// Firebase project without editing package-level generated files.
-class VetFirebaseApiConfig {
+class FirebaseApiConfig {
   final String apiKey;
   final String appId;
   final String messagingSenderId;
@@ -17,7 +17,7 @@ class VetFirebaseApiConfig {
   final String? storageBucket;
   final String? measurementId;
 
-  const VetFirebaseApiConfig({
+  const FirebaseApiConfig({
     required this.apiKey,
     required this.appId,
     required this.messagingSenderId,
@@ -32,7 +32,7 @@ class VetFirebaseApiConfig {
       appId.trim().isNotEmpty &&
       messagingSenderId.trim().isNotEmpty &&
       projectId.trim().isNotEmpty;
-
+  // Converts this config to the standard [FirebaseOptions] used by Firebase.initializeApp.
   FirebaseOptions toFirebaseOptions() {
     return FirebaseOptions(
       apiKey: apiKey,
@@ -56,7 +56,7 @@ class VetApplicationBootstrap {
   /// Local setup for development — initializes Firebase, sets a dev user, and registers plugins.
   static Future<void> run({
     bool useEmulators = false,
-    VetFirebaseApiConfig? firebaseConfig,
+    FirebaseApiConfig? firebaseConfig,
   }) async {
     if (firebaseConfig != null && !firebaseConfig.isComplete) {
       throw ArgumentError(
@@ -65,7 +65,8 @@ class VetApplicationBootstrap {
       );
     }
 
-    final firebaseOptions = firebaseConfig?.toFirebaseOptions();
+    final FirebaseOptions? firebaseOptions = firebaseConfig
+        ?.toFirebaseOptions();
 
     // Step 1: Initialize framework + Firebase
     await AppBootstrap.initialize(
@@ -75,27 +76,24 @@ class VetApplicationBootstrap {
           if (useEmulators) {
             FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
             FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
-            // Firestore rules require request.auth != null.
-            // For local dev with emulators, ensure a signed-in Firebase user.
-            if (FirebaseAuth.instance.currentUser == null) {
-              await FirebaseAuth.instance.signInAnonymously();
-            }
           }
         },
         defaultPermissionPolicy: const OpenPermissionPolicy(),
       ),
     );
 
-    // Step 2: Set active user (replace with real auth state listener)
+    // Step 2: Important - Authorization Setup (Access denied without this!)
     PermissionMiddleware.instance.setUser(
       const UserIdentity(
-        userId: 'dev-user',
-        persona: 'admin', // ShalloonPersona.admin.label
-        email: 'dev@shalloon.app',
+        userId: '0000-0000-0000-0000-000000000001',
+        persona: 'admin',
+        email: 'arindambhattacharyya.ab@gmail.com',
       ),
     );
 
     // Step 3: Register plugins — this is the entire app configuration
+    //If you remove it: navigation will be empty or incomplete plugin routes like /doctors or /clients won’t be wired
+
     await AppBootstrap.registerPlugins([doctorsPlugin, petOwnerPlugin]);
   }
 }
