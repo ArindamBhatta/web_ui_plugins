@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vet_application/theme/app_colors.dart';
 import 'package:web_ui_plugins/web_ui_plugins.dart';
 
 /// App shell — generated from the plugin registry.
@@ -18,6 +19,8 @@ class VetApplication extends StatelessWidget {
               const PluginLeftNavigation(
                 title: 'Vet Application',
                 width: 280,
+                backgroundColor: AppColors.primary,
+                foregroundColor: AppColors.textOnPrimary,
                 collapsedWidth: 56,
                 initiallyCollapsed: false,
                 showCollapseToggle: true,

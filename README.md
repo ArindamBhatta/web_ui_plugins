@@ -13,15 +13,6 @@
 
 ## Screenshots
 
-Here are some example screenshots to help you understand what you can build with this framework:
-
-| UI Example |  |
-|---|---|
-| <img src="docs/assets/images/Screenshot_1.png" width="900"/> |
-| <img src="docs/assets/images/Screenshot_2.png" width="900"/> |
-| <img src="docs/assets/images/Screenshot_3.png" width="900"/> | 
-| <img src="docs/assets/images/Screenshot_4.png" width="900"/> | 
-| <img src="docs/assets/images/Screenshot_5.png" width="900"/> | 
 
 ## Features
 
@@ -74,9 +65,6 @@ Here are some example screenshots to help you understand what you can build with
    runApp(AppBootstrap.buildRouterApp(...));
    ```
 
-## Example
-
-See [`example/shalloon_web`](example/shalloon_web) for a full working app with Staff and Clients modules.
 
 ## Architecture
 

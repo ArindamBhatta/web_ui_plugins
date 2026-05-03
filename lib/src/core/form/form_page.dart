@@ -790,30 +790,33 @@ class _FormPageViewState extends State<FormPageView> {
       ),
 
       ///
-      FieldType.date => FormDateField(
-        key: ValueKey(
-          '${widget.dataModel.uid}|$key|${_fieldFingerprint(field)}',
-        ),
-        initialValue: initialValue,
-        onChanged: (String value) {
-          _formData[key] = value;
-          field.onChanged?.call(value, _formData);
-          _onFieldChanged();
-        },
-        onSaved: (String value) {
-          _formData[key] = value;
-        },
-        labelText: labelText,
-        enabled: enabled,
-        mandatory: mandatory,
-        dateRangeEndInDays: (field as DateWidgetConfig).dateRangeEndInDays,
-        dateRangeStartInDays: field.dateRangeStartInDays,
-        keepTextVisible: field.keepTextVisible,
-        defaultDateInDays: field.defaultDateInDays,
-        onPickDate: field.onPickDateWithFormData != null
-            ? () => field.onPickDateWithFormData!.call(_formData)
-            : field.onPickDate,
-      ),
+      FieldType.date => (() {
+        final dateField = field is DateWidgetConfig ? field : null;
+        return FormDateField(
+          key: ValueKey(
+            '${widget.dataModel.uid}|$key|${_fieldFingerprint(field)}',
+          ),
+          initialValue: initialValue,
+          onChanged: (String value) {
+            _formData[key] = value;
+            dateField?.onChanged?.call(value, _formData);
+            _onFieldChanged();
+          },
+          onSaved: (String value) {
+            _formData[key] = value;
+          },
+          labelText: labelText,
+          enabled: enabled,
+          mandatory: mandatory,
+          dateRangeEndInDays: dateField?.dateRangeEndInDays,
+          dateRangeStartInDays: dateField?.dateRangeStartInDays,
+          keepTextVisible: field.keepTextVisible,
+          defaultDateInDays: dateField?.defaultDateInDays,
+          onPickDate: dateField?.onPickDateWithFormData != null
+              ? () => dateField!.onPickDateWithFormData!.call(_formData)
+              : dateField?.onPickDate,
+        );
+      })(),
 
       ///
       FieldType.amount => FormFieldView.amount(
