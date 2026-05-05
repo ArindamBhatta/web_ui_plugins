@@ -3,23 +3,31 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart';
 
 class AppTheme {
-  static ThemeData get light {
+  AppTheme._();
+
+  static ThemeData get lightTheme {
+    final scheme = ColorScheme.fromSeed(
+      seedColor: AppColors.primary,
+      brightness: Brightness.light,
+    ).copyWith(
+      primary: AppColors.primary,
+      onPrimary: AppColors.textOnPrimary,
+      primaryContainer: AppColors.primaryLight,
+      onPrimaryContainer: AppColors.textPrimary,
+      secondary: AppColors.secondary,
+      onSecondary: AppColors.textOnPrimary,
+      secondaryContainer: AppColors.secondaryLight,
+      onSecondaryContainer: AppColors.textPrimary,
+      error: AppColors.errorColor,
+      onError: AppColors.textOnPrimary,
+      surface: AppColors.cardBackground,
+      onSurface: AppColors.textPrimary,
+      outline: AppColors.borderColor,
+    );
+
     final base = ThemeData(
       useMaterial3: true,
-      colorScheme: const ColorScheme.light(
-        primary: AppColors.primary,
-        onPrimary: AppColors.textOnPrimary,
-        primaryContainer: AppColors.primaryLight,
-        onPrimaryContainer: AppColors.textPrimary,
-        secondary: AppColors.secondary,
-        onSecondary: AppColors.textOnPrimary,
-        secondaryContainer: AppColors.secondaryLight,
-        onSecondaryContainer: AppColors.textPrimary,
-        error: AppColors.errorColor,
-        onError: AppColors.textOnPrimary,
-        surface: AppColors.cardBackground,
-        onSurface: AppColors.textPrimary,
-      ),
+      colorScheme: scheme,
       scaffoldBackgroundColor: AppColors.background,
       dividerColor: AppColors.dividerColor,
     );
@@ -62,23 +70,29 @@ class AppTheme {
     );
   }
 
-  static ThemeData get dark {
+  static ThemeData get darkTheme {
+    final scheme = ColorScheme.fromSeed(
+      seedColor: AppColors.primaryDark,
+      brightness: Brightness.dark,
+    ).copyWith(
+      primary: AppColors.primaryLight,
+      onPrimary: AppColors.textPrimary,
+      primaryContainer: AppColors.primaryDark,
+      onPrimaryContainer: AppColors.textOnDark,
+      secondary: AppColors.secondaryLight,
+      onSecondary: AppColors.textPrimary,
+      secondaryContainer: AppColors.secondaryDark,
+      onSecondaryContainer: AppColors.textOnDark,
+      error: AppColors.errorColor,
+      onError: AppColors.textOnPrimary,
+      surface: const Color(0xFF1E1E1E),
+      onSurface: AppColors.textOnDark,
+      outline: AppColors.borderColor,
+    );
+
     final base = ThemeData(
       useMaterial3: true,
-      colorScheme: const ColorScheme.dark(
-        primary: AppColors.primaryLight,
-        onPrimary: AppColors.textPrimary,
-        primaryContainer: AppColors.primaryDark,
-        onPrimaryContainer: AppColors.textOnDark,
-        secondary: AppColors.secondaryLight,
-        onSecondary: AppColors.textPrimary,
-        secondaryContainer: AppColors.secondaryDark,
-        onSecondaryContainer: AppColors.textOnDark,
-        error: AppColors.errorColor,
-        onError: AppColors.textOnPrimary,
-        surface: Color(0xFF1E1E1E),
-        onSurface: AppColors.textOnDark,
-      ),
+      colorScheme: scheme,
       scaffoldBackgroundColor: AppColors.darkBackground,
       dividerColor: AppColors.borderColor,
     );
@@ -89,7 +103,10 @@ class AppTheme {
         foregroundColor: AppColors.textOnDark,
         elevation: 0,
       ),
-      cardTheme: const CardThemeData(color: Color(0xFF1E1E1E), elevation: 0),
+      cardTheme: const CardThemeData(
+        color: Color(0xFF1E1E1E),
+        elevation: 0,
+      ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: const Color(0xFF1E1E1E),

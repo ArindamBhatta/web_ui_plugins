@@ -413,3 +413,6 @@ create: (_) => FormCubit(repo: RepositoryProvider.of<ScopedRepo>(context)),
 - [ ] Two modules with same model type but different collections don't collide.
 - [ ] Each `FormCubit` is wired to its own plugin's `ScopedRepo` (backlog #4).
 - [ ] Firestore listener errors surface as `SuccessStatus.failure` in `SectionState` (backlog #8).
+
+
+-- firebase emulators:start --import=./emulator-data --export-on-exit

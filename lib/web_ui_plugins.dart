@@ -25,7 +25,10 @@ export 'src/core/bootstrap/app_bootstrap.dart';
 
 // ── Permissions ───────────────────────────────────────────────────────────────
 export 'src/core/permissions/permission_middleware.dart';
-
+// ── Theme ──────────────────────────────────────────────────────────────────────
+export 'src/core/theme/app_theme.dart';
+export 'src/core/theme/app_colors.dart';
+export 'src/core/theme/theme_extensions.dart';
 // ── Navigation ────────────────────────────────────────────────────────────────
 export 'src/core/navigation/plugin_left_navigation.dart';
 

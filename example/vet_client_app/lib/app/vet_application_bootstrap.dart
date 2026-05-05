@@ -68,21 +68,22 @@ class VetApplicationBootstrap {
     final FirebaseOptions? firebaseOptions = firebaseConfig
         ?.toFirebaseOptions();
 
-    // Step 1: Initialize framework + Firebase
+    // Step 1: Initialize Firebase
     await AppBootstrap.initialize(
       config: BootstrapConfig(
         initializeFirebase: () async {
           await Firebase.initializeApp(options: firebaseOptions);
           if (useEmulators) {
-            FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
+            FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8081);
             FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+            //Use other emulators as needed, e.g. Storage emulator on 9199
           }
         },
         defaultPermissionPolicy: const OpenPermissionPolicy(),
       ),
     );
 
-    // Step 2: Important - Authorization Setup (Access denied without this!)
+    // Step 2: Important - Authorization Setup (Access denied without this!) write now it’s a dummy user for development, but you can replace it with real auth logic.
     PermissionMiddleware.instance.setUser(
       const UserIdentity(
         userId: '0000-0000-0000-0000-000000000001',
@@ -91,9 +92,7 @@ class VetApplicationBootstrap {
       ),
     );
 
-    // Step 3: Register plugins — this is the entire app configuration
-    //If you remove it: navigation will be empty or incomplete plugin routes like /doctors or /clients won’t be wired
-
+    // Step 3: Register plugins — this is the entire app configuration example route wiring happens here. Each plugin registers its own routes and dependencies.
     await AppBootstrap.registerPlugins([doctorsPlugin, petOwnerPlugin]);
   }
 }

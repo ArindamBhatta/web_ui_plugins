@@ -3,9 +3,9 @@
     "platforms": {
       "dart": {
         "lib/firebase_options.dart": {
-          "projectId": "baisakhi-enterprise-vet-clinic",
+          "projectId": "chat-app-44a75",
           "configurations": {
-            "web": "1:956604115365:web:1e126a71c8ce1fa029204c"
+            "web": "1:593360566365:web:ed338bacd98cdb509075b4"
           }
         }
       }
@@ -26,13 +26,13 @@
       "port": 9099
     },
     "firestore": {
-      "port": 8080
+      "port": 8081
     },
     "hosting": {
       "port": 5002
     },
     "pubsub": {
-      "port": 8085
+      "port": 8086
     },
      "storage": {
       "port": 9199

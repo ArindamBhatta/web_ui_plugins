@@ -4,15 +4,12 @@ import 'package:vet_application/home/vet_application.dart';
 import 'package:web_ui_plugins/web_ui_plugins.dart';
 
 import 'app/vet_application_bootstrap.dart';
-import 'theme/app_colors.dart';
-import 'theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Paste your new Firebase project values here.
-  // Keep empty to use the generated DefaultFirebaseOptions.
-  const customFirebaseConfig = FirebaseApiConfig(
+  // Step 1: -Paste your new Firebase project values here.
+  const FirebaseApiConfig customFirebaseConfig = FirebaseApiConfig(
     apiKey: 'AIzaSyD0J_5aqolfSn9uDnkcVfVvyrQjZc2gaBg',
     appId: '1:593360566365:web:ed338bacd98cdb509075b4',
     messagingSenderId: '593360566365',
@@ -22,13 +19,13 @@ void main() async {
     measurementId: 'G-RK7YFJGJJC',
   );
 
-  /// use getter to check if the config is complete, otherwise pass null to use default options.
+  // use getter to check if the config is complete, otherwise pass null to use default options.
   final FirebaseApiConfig? firebaseConfig = customFirebaseConfig.isComplete
       ? customFirebaseConfig
       : null;
 
   try {
-    //initializes Firebase, sets up the user, and registers plugins.
+    //Step 2: -initializes Firebase, sets up the user, and registers plugins.
     await VetApplicationBootstrap.run(
       useEmulators: true,
       firebaseConfig: firebaseConfig,
@@ -37,12 +34,12 @@ void main() async {
     runApp(
       AppBootstrap.buildRouterApp(
         title: 'Vet Client App',
-        theme: AppTheme.light.copyWith(
-          colorScheme: AppTheme.light.colorScheme.copyWith(
+        theme: AppTheme.lightTheme.copyWith(
+          colorScheme: AppTheme.lightTheme.colorScheme.copyWith(
             primary: AppColors.primary,
           ),
         ),
-        darkTheme: AppTheme.dark,
+        darkTheme: AppTheme.darkTheme,
         themeMode: ThemeMode.system,
         shellBuilder: (context, child) => VetApplication(child: child),
       ),

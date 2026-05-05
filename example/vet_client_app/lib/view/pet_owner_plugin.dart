@@ -32,7 +32,7 @@ petOwnerPlugin = PluginDescriptor<PetOwnerModel>(
 
   /// Data binding: collection, serializer, empty factory. The framework uses this to generate a repo and sync with Firestore. The plugin author only writes the model and the fromJson logic, and the framework handles the rest.
   dataBinding: PluginDataBinding<PetOwnerModel>(
-    collectionName: 'clients',
+    collectionName: 'petOwners', // Firestore collection name
     fromJson: PetOwnerModel.fromJson,
     createEmpty: PetOwnerModel.new,
   ),
@@ -40,7 +40,7 @@ petOwnerPlugin = PluginDescriptor<PetOwnerModel>(
   /// Routes: path, builder, and optional access policy. The framework uses this to generate GoRouter routes and enforce permissions. The plugin author only writes the builder logic, and the framework handles the rest.
   routes: [
     PluginRouteDescriptor(
-      path: '/clients',
+      path: '/pet-owners', //GoRouter path
       builder: (BuildContext ctx, GoRouterState state) => ClientSectionPage(
         initialSelectedItemId: state.uri.queryParameters['selected'],
       ),
@@ -132,24 +132,10 @@ class ClientSectionPage extends StatelessWidget {
           ),
 
           WidgetConfig(
-            key: 'alternateMobile',
-            fieldType: FieldType.mobileNumber,
-            labelText: 'Alternate Mobile',
-            initialValue: item.alternateMobile,
-            mandatory: false,
-          ),
-          WidgetConfig(
             key: 'email',
             fieldType: FieldType.email,
             labelText: 'Email',
             initialValue: item.email,
-            mandatory: false,
-          ),
-          WidgetConfig(
-            key: 'whatsapp',
-            fieldType: FieldType.whatsapp,
-            labelText: 'WhatsApp',
-            initialValue: item.whatsapp,
             mandatory: false,
           ),
 
