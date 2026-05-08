@@ -179,11 +179,11 @@ class _PluginLeftNavigationState extends State<PluginLeftNavigation> {
       );
     }).toList();
 
-    final currentPath = GoRouter.of(
-      context,
-    ).routeInformationProvider.value.uri.path;
+    /// Gets the current path from GoRouterState to determine which nav item is active.
+    final String currentPath = GoRouterState.of(context).uri.path;
 
-    final navWidth = _collapsed ? widget.collapsedWidth : widget.width;
+    /// Determines the width of the navigation based on whether it's collapsed or not.
+    final double navWidth = _collapsed ? widget.collapsedWidth : widget.width;
 
     return AnimatedContainer(
       duration: _animDuration,
@@ -205,6 +205,8 @@ class _PluginLeftNavigationState extends State<PluginLeftNavigation> {
                 var runningTop = 0.0;
                 for (var index = 0; index < items.length; index++) {
                   final descriptor = items[index].descriptor;
+
+                  /// Checks if the current path matches any of the plugin's routes to determine if this item is selected.
                   final isSelected = _matchesRoute(
                     currentPath,
                     descriptor.routes,
@@ -364,6 +366,7 @@ class _PluginLeftNavigationState extends State<PluginLeftNavigation> {
     );
   }
 
+  /// Checks if [currentPath] matches any of the plugin's routes (exact or as a parent).
   bool _matchesRoute(String currentPath, List<PluginRouteDescriptor> routes) {
     for (final route in routes) {
       final path = route.path;
