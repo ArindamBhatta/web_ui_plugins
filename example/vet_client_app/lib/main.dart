@@ -31,6 +31,7 @@ void main() async {
       firebaseConfig: firebaseConfig,
     );
 
+    // Step 3: -builds the app with the router and plugin-generated shell.
     runApp(
       AppBootstrap.buildRouterApp(
         title: 'Vet Client App',
@@ -44,10 +45,14 @@ void main() async {
         shellBuilder: (context, child) => VetApplication(child: child),
       ),
     );
-  } catch (e) {
+  } catch (error) {
     runApp(
       MaterialApp(
-        home: Scaffold(body: Center(child: Text('Initialization failed: $e'))),
+        home: Scaffold(
+          body: Center(
+            child: Text('Application Initialization failed: $error'),
+          ),
+        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:web_ui_plugins/web_ui_plugins.dart';
 
@@ -8,35 +9,37 @@ import '../domain/models/doctor_model.dart';
 
 /// Doctors plugin descriptor.
 /// This is the entire surface area the developer fills in to add a new section.
-final doctorsPlugin = PluginDescriptor<DoctorModel>(
-  moduleId: 'doctors',
-  title: VetAppSection.doctors.label,
-  icon: VetAppSection.doctors.icon,
-  color: VetAppSection.doctors.color,
-  order: VetAppSection.doctors.order,
-  features: const PluginFeatureFlags(
-    supportsCrud: true,
-    supportsRealtime: true,
-    supportsUpload: true, // profile photo
-  ),
-  visibilityPolicy: PersonaPermissionPolicy({
-    VetApplicationEnums.admin.label,
-    VetApplicationEnums.manager.label,
-  }),
-  dataBinding: PluginDataBinding<DoctorModel>(
-    collectionName: 'doctors', // Firestore collection name
-    fromJson: DoctorModel.fromJson,
-    createEmpty: DoctorModel.new,
-  ),
-  routes: [
-    PluginRouteDescriptor(
-      path: '/doctors', // Navigates
-      builder: (BuildContext ctx, GoRouterState state) => DoctorsSectionPage(
-        initialSelectedItemId: state.uri.queryParameters['selected'],
+final PluginDescriptor<DoctorModel> doctorsPlugin =
+    PluginDescriptor<DoctorModel>(
+      moduleId: 'doctors',
+      title: VetAppSection.doctors.label,
+      icon: VetAppSection.doctors.icon,
+      color: VetAppSection.doctors.color,
+      order: VetAppSection.doctors.order,
+      features: const PluginFeatureFlags(
+        supportsCrud: true,
+        supportsRealtime: true,
+        supportsUpload: true, // profile photo
       ),
-    ),
-  ],
-);
+      visibilityPolicy: PersonaPermissionPolicy({
+        VetApplicationEnums.admin.label,
+        VetApplicationEnums.manager.label,
+      }),
+      dataBinding: PluginDataBinding<DoctorModel>(
+        collectionName: 'doctors', // Firestore collection name
+        fromJson: DoctorModel.fromJson,
+        createEmpty: DoctorModel.new,
+      ),
+      routes: [
+        PluginRouteDescriptor(
+          path: '/doctors', // Navigates
+          builder: (BuildContext ctx, GoRouterState state) =>
+              DoctorsSectionPage(
+                initialSelectedItemId: state.uri.queryParameters['selected'],
+              ),
+        ),
+      ],
+    );
 
 /// Doctors section page — the developer writes this view.
 /// The framework handles data, state, list, form, and dialog.
@@ -81,7 +84,6 @@ class DoctorsSectionPage extends StatelessWidget {
         qualifications: data['qualifications'] as String?,
         registrationNumber: data['registrationNumber'] as String?,
         mobile: data['mobile'] as String?,
-        alternateMobile: data['alternateMobile'] as String?,
         whatsapp: data['whatsapp'] as String?,
         email: data['email'] as String?,
         fee: data['fee'] as String?,
@@ -91,19 +93,6 @@ class DoctorsSectionPage extends StatelessWidget {
       initialTabDetailBuilder: (item, ctx) => FormPageView(
         formCubit: BlocProvider.of<FormCubit<DoctorModel>>(ctx),
         dataModel: item,
-        rebuildDataModel: (data) => DoctorModel(
-          id: data['id'] as String?,
-          active: data['active'] as String?,
-          name: data['name'] as String?,
-          qualifications: data['qualifications'] as String?,
-          registrationNumber: data['registrationNumber'] as String?,
-          mobile: data['mobile'] as String?,
-          alternateMobile: data['alternateMobile'] as String?,
-          whatsapp: data['whatsapp'] as String?,
-          email: data['email'] as String?,
-          fee: data['fee'] as String?,
-          dob: data['dob'] as String?,
-        ),
         fields: [
           WidgetConfig(
             key: 'name',
@@ -111,6 +100,7 @@ class DoctorsSectionPage extends StatelessWidget {
             labelText: 'Full Name',
             initialValue: item.name,
             mandatory: true,
+            icon: FontAwesomeIcons.userDoctor,
           ),
           WidgetConfig(
             key: 'qualifications',
@@ -118,6 +108,7 @@ class DoctorsSectionPage extends StatelessWidget {
             labelText: 'Qualifications',
             initialValue: item.qualifications,
             mandatory: false,
+            icon: FontAwesomeIcons.graduationCap,
           ),
           WidgetConfig(
             key: 'registrationNumber',
@@ -125,6 +116,7 @@ class DoctorsSectionPage extends StatelessWidget {
             labelText: 'Registration Number',
             initialValue: item.registrationNumber,
             mandatory: false,
+            icon: FontAwesomeIcons.idCard,
           ),
           WidgetConfig(
             key: 'mobile',
@@ -132,40 +124,50 @@ class DoctorsSectionPage extends StatelessWidget {
             labelText: 'Mobile',
             initialValue: item.mobile,
             mandatory: false,
-          ),
-          WidgetConfig(
-            key: 'alternateMobile',
-            fieldType: FieldType.mobileNumber,
-            labelText: 'Alternate Mobile',
-            initialValue: item.alternateMobile,
-            mandatory: false,
+            icon: FontAwesomeIcons.mobile,
           ),
           WidgetConfig(
             key: 'whatsapp',
             fieldType: FieldType.mobileNumber,
             labelText: 'WhatsApp',
             initialValue: item.whatsapp,
-            mandatory: false,
+            icon: FontAwesomeIcons.whatsapp,
           ),
           WidgetConfig(
             key: 'email',
             fieldType: FieldType.email,
             labelText: 'Email',
             initialValue: item.email,
+            icon: FontAwesomeIcons.envelope,
           ),
           WidgetConfig(
             key: 'fee',
             fieldType: FieldType.name,
             labelText: 'Fee',
             initialValue: item.fee,
+            icon: FontAwesomeIcons.moneyBill,
           ),
           WidgetConfig(
             key: 'dob',
             fieldType: FieldType.date,
             labelText: 'Date of Birth',
             initialValue: item.dob,
+            icon: FontAwesomeIcons.birthdayCake,
           ),
         ],
+
+        rebuildDataModel: (data) => DoctorModel(
+          id: data['id'] as String?,
+          active: data['active'] as String?,
+          name: data['name'] as String?,
+          qualifications: data['qualifications'] as String?,
+          registrationNumber: data['registrationNumber'] as String?,
+          mobile: data['mobile'] as String?,
+          whatsapp: data['whatsapp'] as String?,
+          email: data['email'] as String?,
+          fee: data['fee'] as String?,
+          dob: data['dob'] as String?,
+        ),
       ),
     );
   }

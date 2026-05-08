@@ -23,7 +23,6 @@ class DoctorModel extends DataModel {
     this.qualifications,
     this.registrationNumber,
     this.mobile,
-    this.alternateMobile,
     this.whatsapp,
     this.email,
     this.fee,
@@ -37,7 +36,6 @@ class DoctorModel extends DataModel {
     String? qualifications,
     String? registrationNumber,
     String? mobile,
-    String? alternateMobile,
     String? whatsapp,
     String? email,
     String? fee,
@@ -50,7 +48,6 @@ class DoctorModel extends DataModel {
       qualifications: qualifications ?? this.qualifications,
       registrationNumber: registrationNumber ?? this.registrationNumber,
       mobile: mobile ?? this.mobile,
-      alternateMobile: alternateMobile ?? this.alternateMobile,
       whatsapp: whatsapp ?? this.whatsapp,
       email: email ?? this.email,
       fee: fee ?? this.fee,
@@ -65,7 +62,6 @@ class DoctorModel extends DataModel {
     qualifications = json['qualifications'];
     registrationNumber = json['registrationNumber'];
     mobile = json['mobile'];
-    alternateMobile = json['alternateMobile'];
     whatsapp = json['whatsapp'];
     email = json['email'];
     fee = json['fee'];
@@ -80,7 +76,6 @@ class DoctorModel extends DataModel {
     'qualifications': qualifications,
     'registrationNumber': registrationNumber,
     'mobile': mobile,
-    'alternateMobile': alternateMobile,
     'whatsapp': whatsapp,
     'email': email,
     'fee': fee,

@@ -27,14 +27,6 @@ class BootstrapConfig {
   });
 }
 
-/// One-call bootstrap for the entire web_ui_plugins app shell.
-///
-/// Usage:
-/// ```dart
-/// await AppBootstrap.initialize(config: BootstrapConfig(...));
-/// await AppBootstrap.registerPlugins([staffPlugin, clientPlugin]);
-/// runApp(AppBootstrap.buildApp(shell: VetClientShell()));
-/// ```
 class AppBootstrap {
   AppBootstrap._();
 
@@ -73,14 +65,12 @@ class AppBootstrap {
     }
   }
 
-  /// Step 3: Build the root widget with all repository providers injected
-  /// automatically from the plugin registry.
+  /// Step 3: Build the root widget with all repository providers injected, and the router configured from registered plugins.
   static Widget buildApp({
     required Widget shell,
     ThemeData? theme,
     ThemeData? darkTheme,
     ThemeMode? themeMode,
-    String title = '',
   }) {
     final List<RepositoryProvider> providers = _buildProviders();
     return MultiRepositoryProvider(
@@ -91,7 +81,6 @@ class AppBootstrap {
           return MultiBlocProvider(
             providers: cubits,
             child: MaterialApp(
-              title: title,
               theme: theme,
               darkTheme: darkTheme,
               themeMode: themeMode,
@@ -104,7 +93,6 @@ class AppBootstrap {
   }
 
   static Widget buildRouterApp({
-    required Widget Function(BuildContext context, Widget child) shellBuilder,
     ThemeData? theme,
     ThemeData? darkTheme,
     ThemeMode? themeMode,
@@ -112,6 +100,7 @@ class AppBootstrap {
     String? initialLocation,
     WidgetBuilder? forbiddenBuilder,
     WidgetBuilder? noPluginsBuilder,
+    required Widget Function(BuildContext context, Widget child) shellBuilder,
   }) {
     final providers = _buildProviders();
     return MultiRepositoryProvider(
