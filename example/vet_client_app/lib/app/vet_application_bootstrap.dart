@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:web_ui_plugins/web_ui_plugins.dart';
 
-import '../view/pet_owner_plugin.dart';
-import '../view/doctor_plugin.dart';
+import '../view/plugin_ui/pet_owner_plugin.dart';
+import '../view/plugin_ui/doctor_plugin.dart';
 
 /// Optional Firebase config for connecting this example app to a different
 /// Firebase project without editing package-level generated files.

@@ -10,7 +10,6 @@ class DoctorModel extends DataModel {
   String? qualifications;
   String? registrationNumber;
   String? mobile;
-  String? alternateMobile;
   String? whatsapp;
   String? email;
   String? fee;

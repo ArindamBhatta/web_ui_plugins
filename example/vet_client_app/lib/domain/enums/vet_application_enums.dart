@@ -26,7 +26,6 @@ extension VetAppSectionHelper on VetAppSection {
     switch (this) {
       case VetAppSection.petOwners:
         return FontAwesomeIcons.person;
-
       case VetAppSection.doctors:
         return FontAwesomeIcons.userDoctor;
       case VetAppSection.technicians:

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vet_application/home/vet_application.dart';
+import 'package:vet_application/view/vet_application.dart';
 
 import 'package:web_ui_plugins/web_ui_plugins.dart';
 

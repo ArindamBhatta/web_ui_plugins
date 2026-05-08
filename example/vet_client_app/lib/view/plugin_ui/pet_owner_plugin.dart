@@ -4,8 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:web_ui_plugins/web_ui_plugins.dart';
 
-import '../domain/enums/vet_application_enums.dart';
-import '../domain/models/pet_owner_model.dart';
+import '../../domain/enums/vet_application_enums.dart';
+import '../../domain/models/pet_owner_model.dart';
 
 // Single Source of Truth: - It describes everything the framework needs to know about a plugin/module: its unique ID, display info, routes, data binding, permissions, and features.
 final PluginDescriptor<PetOwnerModel>

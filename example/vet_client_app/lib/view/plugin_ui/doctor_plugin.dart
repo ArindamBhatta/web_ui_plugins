@@ -4,8 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:web_ui_plugins/web_ui_plugins.dart';
 
-import '../domain/enums/vet_application_enums.dart';
-import '../domain/models/doctor_model.dart';
+import '../../domain/enums/vet_application_enums.dart';
+import '../../domain/models/doctor_model.dart';
 
 /// Doctors plugin descriptor.
 /// This is the entire surface area the developer fills in to add a new section.
@@ -21,10 +21,12 @@ final PluginDescriptor<DoctorModel> doctorsPlugin =
         supportsRealtime: true,
         supportsUpload: true, // profile photo
       ),
+
       visibilityPolicy: PersonaPermissionPolicy({
         VetApplicationEnums.admin.label,
         VetApplicationEnums.manager.label,
       }),
+
       dataBinding: PluginDataBinding<DoctorModel>(
         collectionName: 'doctors', // Firestore collection name
         fromJson: DoctorModel.fromJson,
