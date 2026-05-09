@@ -1,86 +1,103 @@
-
 # web_ui_plugins
 
-**Plug-and-play SaaS Admin UI Framework for Flutter Web**
+## 🚀 WebUI Plugins: The SaaS Builder's Dream
 
-## Overview
+Building SaaS applications doesn't have to be complex. **WebUI Plugins** is a modular, plug-and-play framework for Flutter Web that brings professional design and functionality without the architectural headache.
 
-`web_ui_plugins` is a modular, plugin-driven framework for building admin panels, dashboards, and SaaS back offices in Flutter Web. It provides:
-- **Plugin registry:** Add/remove features as plugins (e.g., Clients, Staff, Billing)
-- **Scaffolded CRUD:** Rapidly create forms, lists, and detail views for any data model
-- **Firebase-first:** Realtime Firestore integration, authentication, and storage
-- **Permissions:** Role-based access and visibility policies
-- **Responsive UI:** Works on desktop and mobile
+### What makes it different?
 
-## Screenshots
+*   ✨ **Minimal Setup** — Define your data models and UI, let the framework handle the rest.
+*   🔄 **Automatic Magic** — Automatically generates forms, validation, and data handling logic.
+*   ⚡ **Production-Ready** — Built with Firebase integration out of the box.
+*   🎨 **Web-Grade UI** — Professional, responsive design that feels native to the browser.
+*   📦 **Truly Modular** — Register plugins, build features independently, and scale effortlessly.
 
+**Perfect for:** Bootstrapped founders, indie hackers, and dev teams who want to ship SaaS faster without sacrificing quality.
 
-## Features
+---
 
-- 🧩 **Plugin architecture:** Each module is a self-contained plugin
-- ⚡ **Zero-boilerplate CRUD:** Define a model, get forms and lists for free
-- 🔒 **Permission middleware:** Control access by persona/role
-- 🔄 **Realtime updates:** Firestore streams power the UI
-- 🧑‍💻 **Developer experience:** Minimal code to add new sections
+## The 4-Step Developer Experience
 
-## Quick Start
+### 1. Define your Data Model
+```dart
+class PetOwnerModel extends DataModel {
+  final String? id, name, mobile;
+  PetOwnerModel({this.id, this.name, this.mobile});
+  @override Map<String, dynamic> toJson() => {'id': id, 'name': name, 'mobile': mobile};
+  factory PetOwnerModel.fromJson(Map<String, dynamic> json) => ...;
+  @override String? get uid => id;
+}
+```
 
-1. **Add to your `pubspec.yaml`:**
-   ```yaml
-   dependencies:
-     web_ui_plugins:
-       path: ../web_ui_plugins
-   ```
+### 2. Create the Declarative UI
+Use `FormPageView` with `WidgetConfig`. The framework handles the layout and state automatically.
+```dart
+initialTabDetailBuilder: (item, ctx) => FormPageView(
+  fields: [
+    WidgetConfig(key: 'name', fieldType: FieldType.name, labelText: 'Full Name'),
+    WidgetConfig(key: 'mobile', fieldType: FieldType.mobileNumber, labelText: 'Mobile'),
+  ],
+  rebuildDataModel: (data) => PetOwnerModel.fromJson(data),
+)
+```
 
-2. **Define a data model:**
-   ```dart
-   class ClientModel extends DataModel {
-     String? id, name, email;
-     // ...
-     ClientModel.fromJson(Map<String, dynamic> json) { ... }
-     @override Map<String, dynamic> toJson() => { ... };
-     @override String? get uid => id;
-   }
-   ```
+### 3. Register the Plugin Descriptor
+Define identity, permissions, and routing in a single object.
+```dart
+final petOwnerPlugin = PluginDescriptor<PetOwnerModel>(
+  moduleId: 'pet-owners',
+  title: 'Pet Owners',
+  icon: Icons.person,
+  dataBinding: PluginDataBinding<PetOwnerModel>(
+    collectionName: 'petOwners',
+    fromJson: PetOwnerModel.fromJson,
+    createEmpty: PetOwnerModel.new,
+  ),
+  routes: [ ... ],
+);
+```
 
-3. **Register a plugin:**
-   ```dart
-   final clientPlugin = PluginDescriptor<ClientModel>(
-     moduleId: 'clients',
-     title: 'Clients',
-     icon: Icons.people,
-     color: Colors.green,
-     dataBinding: PluginDataBinding<ClientModel>(
-       collectionName: 'clients',
-       fromJson: ClientModel.fromJson,
-       createEmpty: ClientModel.new,
-     ),
-     routes: [ ... ],
-   );
-   ```
+### 4. Bootstrap and Run
+Initialize the framework and register your plugins in `main.dart`.
+```dart
+void main() async {
+  await AppBootstrap.initialize(config: BootstrapConfig(...));
+  await AppBootstrap.registerPlugins([petOwnerPlugin]);
+  runApp(AppBootstrap.buildRouterApp(
+    title: 'My SaaS App',
+    shellBuilder: (context, child) => MyShell(child: child),
+  ));
+}
+```
 
-4. **Bootstrap your app:**
-   ```dart
-   await AppBootstrap.initialize(config: BootstrapConfig(...));
-   await AppBootstrap.registerPlugins([clientPlugin, ...]);
-   runApp(AppBootstrap.buildRouterApp(...));
-   ```
+---
 
+## 🏗️ Feature Status (Current State)
 
-## Architecture
+*   ✅ **Modular Registry:** Plugin system is fully operational.
+*   ✅ **Firebase Integration:** Firestore CRUD and Realtime streams are live.
+*   ✅ **Permission System:** Persona-based sidebar and route gating is live.
+*   ✅ **Scoped Repositories:** Individual data isolation per plugin (Backlog #4 Fixed).
+*   🚧 **Image Uploads [WORK IN PROGRESS]:** `UploadCapability` contract is defined; Firebase Storage adapter implementation is underway.
+*   🚧 **Theme Engine & Dark Mode [WORK IN PROGRESS]:** Base theming is available; automatic switching and deep customization are being refined.
 
-- **PluginRegistry:** Central list of all plugins (modules)
-- **ScopedRepo:** Data access layer, scoped by module and model
-- **SectionWidget:** Handles list/detail UI, dialogs, and state
-- **FormPageView:** Declarative form rendering
-- **PermissionMiddleware:** Persona/role-based access control
+---
 
-## Roadmap
+## Core Framework Architecture
 
-- [ ] More declarative form layouts
-- [ ] Improved onboarding and docs
-- [ ] More backend adapters (Supabase, REST)
-- [ ] UI theming and customization
+*   **PluginRegistry:** Central source of truth for all modules.
+*   **ScopedRepo:** Isolated data access layer per module (Backend-agnostic).
+*   **SectionWidget:** High-performance two-pane master/detail layout.
+*   **PermissionMiddleware:** Dual-layer security (Sidebar visibility + Route guards).
+
+## Roadmap 🛣️
+
+*   [✅] Plugin Registry & Modular Architecture
+*   [✅] Firebase Firestore Adapter
+*   [🚧] **[WIP]** Firebase Storage (UploadCapability)
+*   [🚧] **[WIP]** Advanced UI Theming & Dark Mode
+*   [🚧] Supabase & REST Adapters
+*   [x] Advanced Analytics Dashboards
 
 ## License
 
