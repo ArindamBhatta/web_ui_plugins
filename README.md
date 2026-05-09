@@ -99,6 +99,4 @@ void main() async {
 *   [🚧] Supabase & REST Adapters
 *   [x] Advanced Analytics Dashboards
 
-## License
-
-MIT
+## Application Images
