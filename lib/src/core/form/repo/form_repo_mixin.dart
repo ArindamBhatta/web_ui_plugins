@@ -31,16 +31,19 @@ mixin FormRepoMixin<T extends DataModel> {
     service.dataStream.listen((data) {
       items.clear();
       items.addAll(data);
-    });
-    //checking if this newly created item exists in the local items list
-    String? addedItemId = items.any((item) => item.uid == newlyAddedItemId)
-        ? newlyAddedItemId
-        : null;
 
-    if (addedItemId != null) {
-      newlyAddedItemId = null; // reset after emitting
-    }
-    emitData(items, addedItemId: addedItemId);
+      //checking if this newly created item exists in the local items list
+      String? addedItemId = items.any((item) => item.uid == newlyAddedItemId)
+          ? newlyAddedItemId
+          : null;
+
+      // if addedItemId is null it means the newly added item is not yet in the items list
+      if (addedItemId != null) {
+        newlyAddedItemId = null;
+      }
+
+      emitData(items, addedItemId: addedItemId); //addedItemId is null
+    });
   }
 
   //Whenever you need to add a new record (e.g., user submits a form).
@@ -69,6 +72,7 @@ mixin FormRepoMixin<T extends DataModel> {
       throw Exception('Item not found');
     }
     items[index] = updated;
+    emitData(items); // Broadcast the optimistic update to the SectionCubit!
     return updated;
   }
 
@@ -79,6 +83,7 @@ mixin FormRepoMixin<T extends DataModel> {
     }
     final removed = await service.delete(item);
     items.removeAt(index);
+    emitData(items); // Broadcast the removal to the SectionCubit!
     return removed;
   }
 

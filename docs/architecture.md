@@ -222,26 +222,7 @@ Examples:
 
 ## 7. Runtime Data Flow
 
-```
-User action in View
-  └─► FormCubit.createItem / updateItem / deleteItem  (intent layer)
-        └─► ScopedRepo.create / update / delete        (cache + stream)
-              └─► FirestoreService.create / update / delete  (Firebase adapter)
-                    └─► Firestore write
 
-Firestore realtime snapshot
-  └─► FirestoreService snapshot listener
-        └─► FormServiceMixin.emitData(items)
-              └─► FormRepoMixin.dataStream (broadcast)
-                    └─► SectionCubit._listenToRepo()
-                          └─► _applyFilters(search, status, dateRange)
-                                └─► SectionState emitted
-                                      └─► SectionWidget / SectionView rebuild
-```
-
-Sequential IDs for new records come from the `getNextCategoryId` Cloud Function (not client-generated).
-
----
 
 ## 8. Bootstrap API
 

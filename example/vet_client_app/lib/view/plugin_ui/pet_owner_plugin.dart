@@ -60,6 +60,7 @@ class PetOwnerPluginPage extends StatelessWidget {
   const PetOwnerPluginPage({super.key, this.initialSelectedItemId});
 
   Widget _buildSection(BuildContext context, SectionRepo<PetOwnerModel> repo) {
+    //When the user clicks "Update" in the FormPageView, the widget looks up the tree using BlocProvider.of<FormCubit<PetOwnerModel>>(context). Instead of finding a global instance from main.dart,
     final cubit = BlocProvider.of<FormCubit<PetOwnerModel>>(context);
 
     return SectionWidget<PetOwnerModel>(
@@ -149,10 +150,42 @@ class PetOwnerPluginPage extends StatelessWidget {
     // Provide the persistent, strictly-typed cubit to the widget tree for this route.
     // FormPageView and SectionWidget will successfully find it via BlocProvider.of!
     return BlocProvider.value(
-      value: PetOwnerPluginState.cubit,
+      value: PetOwnerPluginState
+          .cubit, //it finds the static singleton (PetOwnerPluginState.cubit) that you injected at the top of the page using BlocProvider.value.
       child: Builder(
         builder: (ctx) => _buildSection(ctx, PetOwnerPluginState.repo),
       ),
     );
   }
 }
+
+/* 
+Step 1: The UI Trigger (Finding the Instance)
+When the user clicks "Update" in the FormPageView, the widget looks up the tree using BlocProvider.of<FormCubit<PetOwnerModel>>(context). Instead of finding a global instance from main.dart, it finds the static singleton (PetOwnerPluginState.cubit) that you injected at the top of the page using BlocProvider.value.
+
+Step 2: The Cubit Intent (Optimistic UI)
+The UI calls cubit.updateItem(...). The FormCubit immediately emits a FormInProgress state. The UI sees this state and instantly changes the "Update" button to a spinning loading indicator.
+
+Step 3: The Repository & Backend Adapter
+The FormCubit doesn't talk to the database directly. It passes the updated data down to the SectionRepo. The SectionRepo passes it to the FirestoreService (the adapter). The FirestoreService executes the actual write command to Firebase Firestore.
+
+Step 4: The Realtime "Magic" Loop (The Reactive Part)
+This is where your architecture shines. When the data saves to Firebase, two things happen simultaneously:
+
+Path A: The Form Success The FirestoreService write completes successfully. The FormCubit finishes its method and emits a FormSuccess state. The FormPageView listens to this and triggers the green "Saved successfully" Snackbar.
+
+Path B: The Real-time List Update Because your plugin declared supportsRealtime: true in its features, the FirestoreService has an active snapshot listener pointing at the petOwners collection in Firebase.
+
+Firebase instantly pushes the updated collection back to your app.
+FirestoreService receives it and pushes it into the SectionRepo's broadcast stream (dataStream).
+The SectionCubit (which drives the list on the left side of your screen) is constantly listening to this dataStream.
+It receives the new data, applies any active search/status filters, and emits a new SectionState.
+The SectionWidget rebuilds the list instantly showing the newly updated Pet Owner name!
+Summary of the Flow
+Unlike a standard Bloc app where the Bloc has to manually tell the UI to update its lists after a save, your architecture is strictly Data-Driven.
+
+Action Flow: UI ➔ FormCubit ➔ Repo ➔ Firebase Reactive Flow: Firebase ➔ Repo Stream ➔ SectionCubit ➔ UI List Rebuilds
+
+By using PetOwnerPluginState to hold the repo and cubit in static memory, that "Reactive Flow" stays alive in the background. Even if the user navigates away to the "Doctors" page and comes back, the data is instantly there without having to reload!
+
+ */

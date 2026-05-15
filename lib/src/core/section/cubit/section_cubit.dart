@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:web_ui_plugins/src/core/form/cubit/form_cubit.dart';
 import 'package:web_ui_plugins/src/core/form/repo/form_repo_mixin.dart';
 import 'package:web_ui_plugins/src/core/widgets/package_enums.dart';
 
@@ -11,20 +10,33 @@ import 'package:web_ui_plugins/src/core/contracts/data_model.dart';
 part 'section_state.dart';
 
 class SectionCubit<T extends DataModel> extends Cubit<SectionState<T>> {
+  //1st take repo instance
   final FormRepoMixin<T> repo;
-  final FormCubit<T> formCubit;
+
+  //3rd take optional functions to extract status and date from items for filtering
   final String? Function(T item)? statusKeyOf;
+
+  //4th take optional function to extract date from item for date range filtering
   final DateTime? Function(T item)? dateOf;
+
+  // Internal stream and subscription to listen to repo changes
   late Stream<(List<T>, String?)> _repoStream;
+
+  // Keep track of the currently selected item to try to maintain selection across updates
   late StreamSubscription<(List<T>, String?)>? _repoSubscription;
+
+  // Expose selectedItem for external access if needed
   T? selectedItem;
 
   SectionCubit({
     required this.repo,
-    required this.formCubit,
     this.statusKeyOf,
     this.dateOf,
+
+    // App States eg Pending, Completed
     Set<String> initialSelectedStatuses = const <String>{},
+
+    //? The Requirement: A Cubit must have an initial state the moment it is created. It cannot exist in a "null" state. By calling super(...), we are passing the initial state to the underlying Bloc library.
   }) : super(
          SectionState<T>(
            selectedStatuses: initialSelectedStatuses
@@ -36,6 +48,7 @@ class SectionCubit<T extends DataModel> extends Cubit<SectionState<T>> {
     _listenToRepo();
   }
 
+  // It subscribes to a Stream from the repo . Whenever the database or API updates, the Cubit automatically receives the new list, applies the current filters (search text, dates), and emits a new state
   void _listenToRepo() {
     _repoStream = repo.dataStream;
 

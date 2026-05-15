@@ -73,7 +73,6 @@ class _SectionState<T extends DataModel> extends State<SectionWidget<T>> {
     super.initState();
     cubit = SectionCubit<T>(
       repo: widget.repo,
-      formCubit: widget.formCubit,
       statusKeyOf: widget.statusKeyOf,
       dateOf: widget.dateOf,
       initialSelectedStatuses: widget.initialSelectedStatuses,
